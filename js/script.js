@@ -1,6 +1,7 @@
-import Sea from './classes/Sea.js';
-import Sky from './classes/Sky.js';
-import Plane from './classes/Plane.js';
+//import Sea from './classes/Sea.js';
+//import Sky from './classes/Sky.js';
+//import Plane from './classes/Plane.js';
+import Landscape from './classes/Landscape.js';
 
 {
 
@@ -15,15 +16,17 @@ import Plane from './classes/Plane.js';
       renderer,
       container;
 
-  let sea;
+  let landscape;
+
+  //let sea;
   
   let hemisphereLight,
   shadowLight,
   ambientLight
 
-  let sky;
+  //let sky;
 
-  let plane;
+  //let plane;
 
   let mousePos = { x: 0, y: 0 };
 
@@ -37,23 +40,17 @@ import Plane from './classes/Plane.js';
   };
 
   const init = () => {
-    // set up the scene, the camera and the renderer
     createScene();
-
-    //VR
-
-    // add the lights
+    createLandscape();
     createLights();
-
-    // add the objects
-    createPlane();
-    createSea();
-    createSky();
+    //createPlane();
+    //createSea();
+    //createSky();
 
     document.addEventListener('mousemove', handleMouseMove, false);
-
-    //start de render loop
     loop();
+
+    debug();
   }
 
   const createScene = () => {
@@ -63,7 +60,7 @@ import Plane from './classes/Plane.js';
     scene = new THREE.Scene();
     
     aspectRatio = WIDTH / HEIGHT;
-    fieldOfView = 60;
+    fieldOfView = 180;
     nearPlane = 1;
     farPlane= 10000;
     camera = new THREE.PerspectiveCamera(
@@ -72,9 +69,9 @@ import Plane from './classes/Plane.js';
       nearPlane,
       farPlane
     );
-    camera.position.x = 0;
-    camera.position.y = 100;
-    camera.position.z = 200;
+    //camera.position.x = 0;
+    //camera.position.y = 0;
+    //camera.position.z = 0;
 
     renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -87,17 +84,20 @@ import Plane from './classes/Plane.js';
     
     container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);
+
+    //const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    //controls.enablePan = false;
   }
 
   const createLights = () => {
     // A hemisphere light is a gradient colored light; 
     // the first parameter is the sky color, the second parameter is the ground color, 
     // the third parameter is the intensity of the light
-    hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, .9);
+    hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, .5);
 
     //A directional light shines from a specific direction. 
     //It acts like the sun, that means that all the rays produced are parallel. 
-    shadowLight = new THREE.DirectionalLight(0xffffff, .9);
+    shadowLight = new THREE.DirectionalLight(0xffffff, .4);
 
     // Set the direction of the light  
     shadowLight.position.set(300, 350, 350);
@@ -126,7 +126,11 @@ import Plane from './classes/Plane.js';
     scene.add(ambientLight);
   }
 
-  const createSea = () => {
+  const createLandscape = () => {
+    landscape = new Landscape(scene);
+  }
+
+  /*const createSea = () => {
     sea = new Sea();
     sea.mesh.position.y = -800;
     scene.add(sea.mesh);
@@ -143,7 +147,7 @@ import Plane from './classes/Plane.js';
     plane.mesh.scale.set(.25, .25, .25);
     plane.mesh.position.y = 100;
     scene.add(plane.mesh);
-  }
+  }*/
 
   const handleMouseMove = () => {
     // here we are converting the mouse position value received 
@@ -187,11 +191,15 @@ import Plane from './classes/Plane.js';
   const loop = () => {
     renderer.setAnimationLoop(loop);
 
-    sea.moveWaves();
-    sky.moveSky();
-    updatePlane();
+    //sea.moveWaves();
+    //sky.moveSky();
+    //updatePlane();
 
     renderer.render(scene, camera);
+  }
+
+  const debug = () => {
+    //camera.position.y = 1000;
   }
 
 
