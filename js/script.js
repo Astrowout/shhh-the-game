@@ -1,7 +1,8 @@
 //import Sea from './classes/Sea.js';
 //import Sky from './classes/Sky.js';
 //import Plane from './classes/Plane.js';
-import Landscape from './classes/Landscape.js';
+import Environment from './classes/Environment.js';
+import Colors from './classes/Colors.js';
 
 {
 
@@ -16,36 +17,19 @@ import Landscape from './classes/Landscape.js';
       renderer,
       container;
 
-  let landscape;
-
-  //let sea;
+  let environment;
   
   let hemisphereLight,
   shadowLight,
-  ambientLight
-
-  //let sky;
-
-  //let plane;
+  ambientLight,
+  campFireLight;
 
   let mousePos = { x: 0, y: 0 };
 
-  let Colors = {
-    red: 0xf25346,
-    white: 0xd8d0d1,
-    brown: 0x59332e,
-    pink: 0xF5986E,
-    brownDark: 0x23190f,
-    blue: 0x68c3c0,
-  };
-
   const init = () => {
     createScene();
-    createLandscape();
+    createEnvironment();
     createLights();
-    //createPlane();
-    //createSea();
-    //createSky();
 
     document.addEventListener('mousemove', handleMouseMove, false);
     loop();
@@ -70,8 +54,8 @@ import Landscape from './classes/Landscape.js';
       farPlane
     );
     //camera.position.x = 0;
-    //camera.position.y = 0;
-    //camera.position.z = 0;
+    //camera.position.y = 6000;
+    //camera.position.z = -500;
 
     renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -93,11 +77,13 @@ import Landscape from './classes/Landscape.js';
     // A hemisphere light is a gradient colored light; 
     // the first parameter is the sky color, the second parameter is the ground color, 
     // the third parameter is the intensity of the light
-    hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, .5);
+    hemisphereLight = new THREE.HemisphereLight(Colors.purpleLight, Colors.greenLight);
 
     //A directional light shines from a specific direction. 
     //It acts like the sun, that means that all the rays produced are parallel. 
     shadowLight = new THREE.DirectionalLight(0xffffff, .4);
+
+
 
     // Set the direction of the light  
     shadowLight.position.set(300, 350, 350);
@@ -118,36 +104,21 @@ import Landscape from './classes/Landscape.js';
     shadowLight.shadow.mapSize.width = 2048;
     shadowLight.shadow.mapSize.height = 2048;
 
-    ambientLight = new THREE.AmbientLight (0xdc8874, .4);
+    //ambientLight = new THREE.AmbientLight (0xdc8874, .8);
+
+    campFireLight = new THREE.PointLight('#FF2E02', 3, 200);
+    campFireLight.position.set(10, 0, 10);
 
     // to activate the lights, just add them to the scene
     scene.add(hemisphereLight);
     scene.add(shadowLight);
-    scene.add(ambientLight);
+    //scene.add(ambientLight);
+    scene.add(campFireLight);
   }
 
-  const createLandscape = () => {
-    landscape = new Landscape(scene);
+  const createEnvironment = () => {
+    environment = new Environment(scene);
   }
-
-  /*const createSea = () => {
-    sea = new Sea();
-    sea.mesh.position.y = -800;
-    scene.add(sea.mesh);
-  }
-
-  const createSky = () => {
-    sky = new Sky();
-    sky.mesh.position.y = -600;
-    scene.add(sky.mesh);
-  }
-
-  const createPlane = () => {
-    plane = new Plane();
-    plane.mesh.scale.set(.25, .25, .25);
-    plane.mesh.position.y = 100;
-    scene.add(plane.mesh);
-  }*/
 
   const handleMouseMove = () => {
     // here we are converting the mouse position value received 
@@ -163,7 +134,7 @@ import Landscape from './classes/Landscape.js';
     mousePos = { x: tx, y: ty };
   }
 
-  const updatePlane = () => {
+  /*const updatePlane = () => {
 
     var targetY = normalize(mousePos.y, -.75, .75, 25, 175);
     var targetX = normalize(mousePos.x, -.75, .75, -100, 100);
@@ -176,7 +147,7 @@ import Landscape from './classes/Landscape.js';
     plane.mesh.rotation.x = (plane.mesh.position.y - targetY) * 0.0064;
 
     plane.movePlane();
-  }
+  }*/
 
   const normalize = (v, vmin, vmax, tmin, tmax) => {
     const nv = Math.max(Math.min(v, vmax), vmin);
@@ -195,6 +166,7 @@ import Landscape from './classes/Landscape.js';
     //sky.moveSky();
     //updatePlane();
 
+    environment.loop();
     renderer.render(scene, camera);
   }
 

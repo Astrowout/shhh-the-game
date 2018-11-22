@@ -10,9 +10,14 @@ class Floor {
     geom.vertices.forEach(vertex => {
       vertex.x += Math.cos(Math.random() * Math.PI * 2) * (Math.random() * 15 + 5);
       vertex.y += Math.sin(Math.random() * Math.PI * 2) * (Math.random() * 15 + 5);
-    })
+    });
 
-    const mat = new THREE.MeshPhongMaterial({color: '#5F7837', side: THREE.DoubleSide, wireframe: false, flatShading: true})
+    const mat = new THREE.MeshPhongMaterial({
+      color: Colors.greenLight,
+      side: THREE.DoubleSide,
+      wireframe: false,
+      flatShading: true
+    })
     this.mesh = new THREE.Mesh(geom, mat);
   }
 }

@@ -9,11 +9,11 @@ class Cloud {
 
     // create a cube geometry;
     // this shape will be duplicated to create the cloud
-    const geom = new THREE.BoxGeometry(20, 20, 20);
+    const geom = new THREE.DodecahedronGeometry(15, 0);
 
     // create a material; a simple white material will do the trick
     const mat = new THREE.MeshPhongMaterial({
-      color: Colors.white,
+      color: Colors.purpleDark,
     });
 
     // duplicate the geometry a random number of times
@@ -30,7 +30,7 @@ class Cloud {
       m.rotation.y = Math.random()*Math.PI*2;
       
       // set the size of the cube randomly
-      let s = .1 + Math.random()*.9;
+      let s = .5 + Math.random()*.9;
       m.scale.set(s,s,s);
       
       // allow each cube to cast and to receive shadows
@@ -45,7 +45,7 @@ class Cloud {
 
   moveCloud() {
     blocks.forEach(block => {
-      block.rotation.z += 0.008;
+      block.rotation.z += 0.005;
     });
   }
 }
