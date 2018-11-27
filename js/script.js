@@ -4,6 +4,8 @@
 import Environment from './classes/Environment.js';
 import Colors from './classes/Colors.js';
 
+import {getVolumeFromMic} from "./libs/lib.js";
+
 {
 
   let scene,
@@ -27,6 +29,10 @@ import Colors from './classes/Colors.js';
   let mousePos = { x: 0, y: 0 };
 
   const init = () => {
+    window.onload = () => {
+      getVolumeFromMic();
+    }
+
     createScene();
     createEnvironment();
     createLights();

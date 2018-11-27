@@ -4,7 +4,7 @@ import Floor from './Floor.js';
 import Clouds from './Clouds.js';
 import Star from './Star.js';
 //
-import getRandomInt from "../libs/lib.js";
+import {getRandomInt} from "../libs/lib.js";
 
 const nStars = 80;
 

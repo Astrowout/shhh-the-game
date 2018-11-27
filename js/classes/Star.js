@@ -2,7 +2,6 @@ import Colors from "./Colors.js";
 
 class Star {
   constructor(scene, size, pos, light) {
-    console.log(pos.x, pos.y, pos.z);
 
     const geom = new THREE.DodecahedronGeometry(size, 1);
     const mat = new THREE.MeshBasicMaterial({
