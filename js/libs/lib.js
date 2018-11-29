@@ -1,5 +1,4 @@
-let audioContext,
-    meter,
+let meter,
     mediaStreamSource;
 
 export const getRandomInt = (min, max) => {
@@ -7,16 +6,6 @@ export const getRandomInt = (min, max) => {
 }
 
 export const getVolumeFromMic = () => {
-
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
-    // Get an audio context
-    audioContext = new AudioContext();
-    getAudioInput();
-}
-
-const getAudioInput = () => {
-    
     try {
         
         // Retrieve getUserMedia API with all the prefixes of the browsers
@@ -40,9 +29,7 @@ const getAudioInput = () => {
             onMicrophoneDenied
         );
     } catch (e) {
-        if (onError == "function") {
-            onError(e);
-        }
+        alert("sumething wong: " + e);
     }
 }
 
@@ -51,6 +38,12 @@ const onMicrophoneDenied = () => {
 }
 
 const onMicrophoneGranted = (stream) => {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+    // Get an audio context
+    let audioContext = new AudioContext();
+    audioContext.resume();
+    
     // Create an AudioNode from the stream.
     mediaStreamSource = audioContext.createMediaStreamSource(stream);
     
