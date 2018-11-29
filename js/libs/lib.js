@@ -60,7 +60,9 @@ const onVolumeChange = (time) => {
     if (meter.checkClipping()) {
       console.warn(meter.volume);
     } else {
-      console.log(meter.volume);
+        if(meter.volume > .2){
+            console.log('shh');
+        }
     }
 
     window.requestAnimationFrame(onVolumeChange);

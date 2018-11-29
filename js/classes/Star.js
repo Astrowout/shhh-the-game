@@ -1,28 +1,38 @@
 import Colors from "./Colors.js";
 
 class Star {
-  constructor(scene, size, pos, light) {
-
-    const geom = new THREE.DodecahedronGeometry(size, 1);
-    const mat = new THREE.MeshBasicMaterial({
-      color: '#FFF6E0',
-      flatShading: true
-    });
-
-    if(light){
-      const light = new THREE.PointLight('#FFF6E0', 3, size*10);
-      light.position.set(pos.x, pos.y, pos.z);
-      scene.add(light);
-    }
-
-    this.mesh = new THREE.Mesh(geom, mat);
-    scene.add(this.mesh);
-    this.init(pos);
+  constructor(radius, isAlluminated, position) {
+    this.radius = radius;
+    this.isAlluminated = isAlluminated;
+    this.position = position;
+    //
+    this.create();
   }
 
-  init(pos){
-    this.mesh.position.set(pos.x, pos.y, pos.z);
-    
+  create(){
+    const geom = new THREE.DodecahedronGeometry(this.radius, 1);
+    const mat = new THREE.MeshBasicMaterial({
+      color: Colors.white,
+      flatShading: true
+    });
+    //
+    this.mesh = new THREE.Mesh(geom, mat);
+
+    if(this.isAlluminated){
+      this.light = new THREE.PointLight(Colors.white, 3, this.radius * 10);
+    }
+  }
+
+  update(position){
+    if(!this.position){
+      this.position = position;
+    }
+    //
+    this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+
+    if(this.isAlluminated){
+      this.light.position.set(this.position.x, this.position.y, this.position.z);
+    }
   }
 }
 

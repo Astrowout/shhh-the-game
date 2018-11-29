@@ -1,4 +1,3 @@
-import Colors from './Colors.js';
 import Sky from './Sky.js';
 import Floor from './Floor.js';
 import Clouds from './Clouds.js';
@@ -6,38 +5,50 @@ import Star from './Star.js';
 //
 import {getRandomInt} from "../libs/lib.js";
 
-const nStars = 80;
-
 class Environment {
-  constructor(scene) {
-      this.scene = scene;
-      //
-      this.sky = new Sky;
-      this.floor = new Floor;
-      this.clouds = new Clouds;
-      this.moon = new Star(scene, 100, {'x': 0, 'y': 1000, 'z': -1000}, true);
-
-      for(let i = 0; i < nStars; i ++){
-        this.star = new Star(scene, 10, {'x': getRandomInt(-8000, 8000), 'y': getRandomInt(800, 1200), 'z': getRandomInt(-8000, 8000)}, false);
-      }
-      //
-      this.init();
-      this.builtScene();
+  constructor(radius, height, scene) {
+    this.radius = radius;
+    this.height = height;
+    this.scene = scene;
+    //
+    this.create();
+    this.update();
+    this.render();
   }
 
-  init(){
-    this.floor.mesh.position.y = -15;
+  create(){
+    this.sky = new Sky(this.radius);
+    this.floor = new Floor({'width': this.radius, 'height': this.radius}, 5);
+    this.clouds = new Clouds(20, 5, 1);
+    this.moon = new Star(100, true);
+    this.stars = new Array(80).fill('pending star', 0, 80);
+
+    this.stars.forEach((star, index) => {
+      this.stars[index] = new Star(10, false);
+    });
+  }
+
+  update(){
+    this.floor.update({'x': 0, 'y': -15, 'z': 0});
+    this.moon.update({'x': 0, 'y': this.height - 500 , 'z': -1000});
+    this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(0, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
+    this.clouds.update();
   }
 
   loop(){
-    this.clouds.move();
+    this.clouds.loop();
   }
 
-  builtScene(){
+  render(){
     this.scene.add(this.sky.mesh);
     this.scene.add(this.floor.mesh);
     this.scene.add(this.clouds.mesh);
-    //this.scene.add(this.moon.mesh);
+    this.scene.add(this.moon.mesh);
+    this.scene.add(this.moon.light);
+
+    this.stars.forEach(star => {
+      this.scene.add(star.mesh);
+    });
   }
 }
 

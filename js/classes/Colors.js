@@ -6,6 +6,7 @@ var Colors = {
   brownDark: '#8D8172',
   brownLight: '#CBB89C',
   blue: 0x68c3c0,
+  white: '#FFF6E0'
 };
 
 export default Colors;

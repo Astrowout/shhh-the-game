@@ -114,18 +114,18 @@ import {getVolumeFromMic} from "./libs/lib.js";
 
     //ambientLight = new THREE.AmbientLight (0xdc8874, .8);
 
-    campFireLight = new THREE.PointLight('#FF2E02', 3, 200);
-    campFireLight.position.set(10, 0, 10);
+    //campFireLight = new THREE.PointLight('#FF2E02', 3, 200);
+    //campFireLight.position.set(10, 0, 10);
 
     // to activate the lights, just add them to the scene
     scene.add(hemisphereLight);
     scene.add(shadowLight);
     //scene.add(ambientLight);
-    scene.add(campFireLight);
+    //scene.add(campFireLight);
   }
 
   const createEnvironment = () => {
-    environment = new Environment(scene);
+    environment = new Environment(5000, 1500, scene);
   }
 
   const handleMouseMove = () => {
