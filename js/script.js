@@ -28,12 +28,12 @@ import {getVolumeFromMic} from "./libs/lib.js";
 
   let mousePos = { x: 0, y: 0 };
 
-  const https = require​(​'https'​),
-    fs = require​(​'fs'​);
+  //const https = require​(​'https'​),
+  //fs = require​(​'fs'​);
 
   const init = () => {
-    window.addEventListener('touchstart', getVolumeFromMic);
-    window.addEventListener('click', getVolumeFromMic);
+    //window.addEventListener('touchstart', getVolumeFromMic);
+    //window.addEventListener('click', getVolumeFromMic);
 
     createScene();
     createEnvironment();

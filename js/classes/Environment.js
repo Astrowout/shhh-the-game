@@ -3,6 +3,7 @@ import Floor from './Floor.js';
 import Clouds from './Clouds.js';
 import Star from './Star.js';
 import Campfire from './Campfire.js';
+import Forest from './Forest.js';
 //
 import {getRandomInt} from "../libs/lib.js";
 
@@ -29,6 +30,7 @@ class Environment {
     });
 
     this.campfire = new Campfire();
+    this.forest = new Forest(300, {'x': this.radius, 'y': this.radius}, this.scene);
   }
 
   update(){
@@ -37,6 +39,7 @@ class Environment {
     this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(0, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
     this.clouds.update();
     this.campfire.update({'x': 40, 'y': 0, 'z': 0});
+    this.forest.update();
   }
 
   loop(){

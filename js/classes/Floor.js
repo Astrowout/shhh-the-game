@@ -11,7 +11,7 @@ class Floor {
 
   create(){
     const geom = new THREE.PlaneGeometry(this.size.width, this.size.height, this.size.width / (this.size.width / 100), this.size.height / (this.size.height / 100));
-    geom.applyMatrix(new THREE.Matrix4().makeRotationX(1.6));
+    geom.applyMatrix(new THREE.Matrix4().makeRotationX(1.55));
     geom.mergeVertices();
 
     geom.vertices.forEach(vertex => {

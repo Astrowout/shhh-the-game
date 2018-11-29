@@ -9,8 +9,8 @@ class Campfire {
 
   create(){
     // ...
-    //
-    this.light = new THREE.PointLight('#FF2E02', 3, 200);
+    // 
+    this.light = new THREE.PointLight(Colors.brightOrange, 3, 200);
   }
 
   update(position){
