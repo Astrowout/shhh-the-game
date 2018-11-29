@@ -2,6 +2,7 @@ import Sky from './Sky.js';
 import Floor from './Floor.js';
 import Clouds from './Clouds.js';
 import Star from './Star.js';
+import Campfire from './Campfire.js';
 //
 import {getRandomInt} from "../libs/lib.js";
 
@@ -18,7 +19,7 @@ class Environment {
 
   create(){
     this.sky = new Sky(this.radius);
-    this.floor = new Floor({'width': this.radius, 'height': this.radius}, 5);
+    this.floor = new Floor({'width': this.radius, 'height': this.radius}, 0);
     this.clouds = new Clouds(20, 5, 1);
     this.moon = new Star(100, true);
     this.stars = new Array(80).fill('pending star', 0, 80);
@@ -26,6 +27,8 @@ class Environment {
     this.stars.forEach((star, index) => {
       this.stars[index] = new Star(10, false);
     });
+
+    this.campfire = new Campfire();
   }
 
   update(){
@@ -33,6 +36,7 @@ class Environment {
     this.moon.update({'x': 0, 'y': this.height - 500 , 'z': -1000});
     this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(0, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
     this.clouds.update();
+    this.campfire.update({'x': 40, 'y': 0, 'z': 0});
   }
 
   loop(){
@@ -45,6 +49,8 @@ class Environment {
     this.scene.add(this.clouds.mesh);
     this.scene.add(this.moon.mesh);
     this.scene.add(this.moon.light);
+    //this.scene.add(this.campfire.mesh);
+    this.scene.add(this.campfire.light);
 
     this.stars.forEach(star => {
       this.scene.add(star.mesh);

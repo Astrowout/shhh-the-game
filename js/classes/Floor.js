@@ -15,8 +15,8 @@ class Floor {
     geom.mergeVertices();
 
     geom.vertices.forEach(vertex => {
-      vertex.x += Math.cos(Math.random() * Math.PI * 2) * (Math.random() * 15 + this.relief);
-      vertex.y += Math.sin(Math.random() * Math.PI * 2) * (Math.random() * 15 + this.relief);
+      vertex.x += Math.cos(Math.random() * Math.PI * 2) * (Math.random() * 10 + this.relief);
+      vertex.y += Math.sin(Math.random() * Math.PI * 2) * (Math.random() * 10 + this.relief);
     });
 
     const mat = new THREE.MeshPhongMaterial({
