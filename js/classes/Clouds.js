@@ -1,37 +1,46 @@
 import Cloud from "./Cloud.js";
 
-let c;
-
 class Clouds {
-  constructor() {
-    this.mesh = new THREE.Object3D();
-    this.mesh.applyMatrix(new THREE.Matrix4().makeRotationX(1.6));
-
-    this.nClouds = 20;
-
-    const stepAngle = Math.PI * 2 / this.nClouds;
-
-    for (let i = 0; i < this.nClouds; i++) {
-      c = new Cloud();
-
-      const a = stepAngle * i;
-      const h = 1100 + Math.random() * 40;
-
-      c.mesh.position.y = Math.sin(a) * h;
-      c.mesh.position.x = Math.cos(a) * h;
-      c.mesh.rotation.z = a + Math.PI / 2;
-      c.mesh.position.z = -400 - Math.random() * 400;
-
-      const s = 1 + Math.random() * 6;
-      c.mesh.scale.set(s, s, s);
-
-      this.mesh.add(c.mesh);
-    }
+  constructor(amount, size, speed) {
+    this.amount = amount;
+    this.size = size;
+    this.speed = speed;
+    //
+    this.create();
   }
 
-  move() {
-    c.moveCloud();
-    this.mesh.rotation.z += 0.001;
+  create(){
+    this.mesh = new THREE.Object3D();
+    this.mesh.applyMatrix(new THREE.Matrix4().makeRotationX(1.6));
+    //
+    this.clouds = new Array(this.amount).fill('pending cloud', 0, this.amount);
+    //
+    this.clouds.forEach((cloud, index) => {
+      this.clouds[index] = new Cloud(this.size / 5 , this.speed * 2);
+    });
+  }
+
+  update(){
+    this.clouds.forEach((cloud, index) => {
+      const stepAngle = Math.PI * 2 / this.clouds.length;
+      const a = stepAngle * index;
+      const h = 1100 + Math.random() * 40;
+      cloud.mesh.position.y = Math.sin(a) * h;
+      cloud.mesh.position.x = Math.cos(a) * h;
+      cloud.mesh.rotation.z = a + Math.PI / 2;
+      cloud.mesh.position.z = -400 - Math.random() * 400;
+    
+      const s = 1 + Math.random() * this.size;
+      cloud.mesh.scale.set(s, s, s);
+      this.mesh.add(cloud.mesh);
+    })
+  }
+
+  loop(){
+    this.clouds.forEach(cloud => {
+      cloud.loop();
+      this.mesh.rotation.z += this.speed / 10000;
+    })
   }
 }
 
