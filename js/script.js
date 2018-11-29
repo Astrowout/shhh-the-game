@@ -2,6 +2,7 @@
 //import Sky from './classes/Sky.js';
 //import Plane from './classes/Plane.js';
 import Environment from './classes/Environment.js';
+import Enemies from './classes/Enemies.js';
 import Colors from './classes/Colors.js';
 
 import {getVolumeFromMic} from "./libs/lib.js";
@@ -20,6 +21,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
       container;
 
   let environment;
+  let enemies;
   
   let hemisphereLight,
   shadowLight,
@@ -28,21 +30,26 @@ import {getVolumeFromMic} from "./libs/lib.js";
 
   let mousePos = { x: 0, y: 0 };
 
-  const https = require​(​'https'​),
-    fs = require​(​'fs'​);
-
   const init = () => {
-    window.addEventListener('touchstart', getVolumeFromMic);
-    window.addEventListener('click', getVolumeFromMic);
+    // window.addEventListener('touchstart', getVolumeFromMic);
+    // window.addEventListener('click', getVolumeFromMic);
+
+    loadModels();
 
     createScene();
     createEnvironment();
+    // createEnemies();
     createLights();
 
     document.addEventListener('mousemove', handleMouseMove, false);
     loop();
 
     debug();
+  }
+
+  const loadModels = () => {
+    const loader = new THREE.GLTFLoader();
+    loader.load('../assets/bird.glb', enemyModel => createEnemies(enemyModel));
   }
 
   const createScene = () => {
@@ -128,6 +135,10 @@ import {getVolumeFromMic} from "./libs/lib.js";
     environment = new Environment(5000, 1500, scene);
   }
 
+  const createEnemies = (enemyModel) => {
+    enemies = new Enemies(enemyModel, scene);
+  }
+
   const handleMouseMove = () => {
     // here we are converting the mouse position value received 
     // to a normalized value letying between -1 and 1;
@@ -175,11 +186,14 @@ import {getVolumeFromMic} from "./libs/lib.js";
     //updatePlane();
 
     environment.loop();
+    if(enemies) {
+      enemies.loop();
+    }
     renderer.render(scene, camera);
   }
 
   const debug = () => {
-    //camera.position.y = 1000;
+    // camera.position.y = 1000;
   }
 
 
