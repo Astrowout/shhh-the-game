@@ -31,8 +31,8 @@ import {getVolumeFromMic} from "./libs/lib.js";
   let mousePos = { x: 0, y: 0 };
 
   const init = () => {
-    // window.addEventListener('touchstart', getVolumeFromMic);
-    // window.addEventListener('click', getVolumeFromMic);
+    window.addEventListener('touchstart', getVolumeFromMic);
+    window.addEventListener('click', getVolumeFromMic);
 
     loadModels();
 
