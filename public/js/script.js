@@ -130,7 +130,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnemies = () => {
-    enemies = new Enemies(scene);
+    enemies = new Enemies(scene, 5000, 50);
   }
 
   const handleMouseMove = () => {

@@ -26,7 +26,7 @@ class Environment {
     this.stars = new Array(80).fill('pending star', 0, 80);
 
     this.stars.forEach((star, index) => {
-      this.stars[index] = new Star(10, false);
+      this.stars[index] = new Star(8, false);
     });
 
     this.campfire = new Campfire();
