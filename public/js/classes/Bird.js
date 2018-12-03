@@ -1,28 +1,30 @@
 let mixer,
-clock = new THREE.Clock();
+    clock = new THREE.Clock();
 
 class Bird {
-  constructor(enemy, speed, position) {
-    this.enemy = enemy;
-    this.speed = speed;
-    this.position = position;
+  constructor(scene) {
+    this.scene = scene;
+    // this.position = position;
     //
 
-    this.create();
+    this.load();
   }
 
-  create() {
+  load() {
+    const loader = new THREE.GLTFLoader();
+    loader.load("../assets/bird.glb", loadedModel => this.create(loadedModel));
+  }
+
+  create(bird) {
     const material = new THREE.MeshNormalMaterial({ skinning: true });
-    this.enemy.scene.children[0].children[2].material = material;
-    const geometry = this.enemy.scene.children[0].children[2].geometry;
-    //
-    this.mesh = new THREE.Mesh(geometry, material);
+    bird.scene.children[0].children[2].material = material;
+    this.scene.add(bird.scene);
 
     //create animation
-    mixer = new THREE.AnimationMixer(this.enemy.scene);
-    let clip = THREE.AnimationClip.findByName(this.enemy.animations, "ArmatureAction");
+    mixer = new THREE.AnimationMixer(bird.scene);
+    let clip = bird.animations[0];
     let mixerAction = mixer.clipAction(clip);
-    mixerAction.play();
+    mixerAction.setDuration(0.8).play();
   }
 
   update(position) {
@@ -30,7 +32,7 @@ class Bird {
       this.position = position;
     }
     //
-    this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+    this.enemy.position.set(this.position.x, this.position.y, this.position.z);
   }
 
   loop() {
@@ -40,5 +42,6 @@ class Bird {
     }
   }
 }
+
 
 export default Bird
