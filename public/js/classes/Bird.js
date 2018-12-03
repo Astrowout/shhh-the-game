@@ -1,10 +1,12 @@
 let mixer,
-    clock = new THREE.Clock();
+    clock = new THREE.Clock(),
+    birdie;
 
 class Bird {
-  constructor(scene, position) {
+  constructor(scene, position, angle) {
     this.scene = scene;
     this.position = position;
+    this.angle = angle;
     //
 
     this.load();
@@ -18,7 +20,7 @@ class Bird {
   create(bird) {
     const mat = new THREE.MeshNormalMaterial({ skinning: true });
     bird.scene.children[0].children[2].material = mat;
-    const geo = bird.scene.children[0].children[2].geometry;
+    // const geo = bird.scene.children[0].children[2].geometry;
     this.scene.add(bird.scene);
 
     this.bird = bird.scene;
@@ -37,12 +39,20 @@ class Bird {
       this.position = position;
     }
     this.bird.position.set(this.position.x, this.position.y, this.position.z);
+
+    //set rotation to centerpoint
+    this.bird.rotation.y = -this.angle - Math.PI / 2;
   }
 
   loop() {
     let dt = clock.getDelta();
-    if (mixer) {
+    if (mixer && this.bird) {
       mixer.update(dt)
+      this.bird.position.x += this.bird.position.x * -0.01;
+      this.bird.position.z += this.bird.position.z * -0.01;
+
+      //dive to player
+      this.bird.position.y += this.bird.position.y * -0.002;
     }
   }
 }

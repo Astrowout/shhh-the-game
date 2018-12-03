@@ -3,27 +3,23 @@ import Bird from './Bird.js';
 import { getRandomInt } from "../libs/lib.js";
 
 class Enemies {
-  constructor(scene, radius, amount) {
-    this.scene = scene;
+  constructor(radius, amount, scene) {
     this.radius = radius;
     this.amount = amount;
     //
-    this.create();
+    this.create(scene);
   }
 
-  create() {
+  create(scene) {
     this.birds = new Array(this.amount).fill("pending enemy", 0, this.amount);
-    this.bird = new Bird(this.scene, {
-      'x': 0,
-      'y': 30,
-      'z': -20
-    })
     this.birds.forEach((bird, index) => {
-      this.birds[index] = new Bird(this.scene, {
-        'x': getRandomInt(-600, 600) / 8,
-        'y': 20,
-        'z': getRandomInt(-600, 600) / 8
-      });
+      const distanceOrigin = 500;
+      const randomAngle = getRandomInt(0, 2 * Math.PI);
+      this.birds[index] = new Bird(scene, {
+        x: (distanceOrigin * Math.cos(randomAngle)),
+        y: 25,
+        z: (distanceOrigin * Math.sin(randomAngle))
+      }, randomAngle);
     });
   }
 
