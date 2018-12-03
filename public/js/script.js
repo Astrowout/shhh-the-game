@@ -2,7 +2,7 @@
 //import Sky from './classes/Sky.js';
 //import Plane from './classes/Plane.js';
 import Environment from './classes/Environment.js';
-import Bird from './classes/Bird.js';
+import Enemies from './classes/Enemies.js';
 import Colors from './classes/Colors.js';
 
 import {getVolumeFromMic} from "./libs/lib.js";
@@ -20,8 +20,8 @@ import {getVolumeFromMic} from "./libs/lib.js";
       renderer,
       container;
 
-  let environment;
-  let bird;
+  let environment,
+      enemies;
 
   let hemisphereLight,
   shadowLight,
@@ -130,7 +130,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnemies = () => {
-    bird = new Bird(scene);
+    enemies = new Enemies(scene);
   }
 
   const handleMouseMove = () => {
@@ -180,8 +180,8 @@ import {getVolumeFromMic} from "./libs/lib.js";
     //updatePlane();
 
     environment.loop();
-    if (bird) {
-      bird.loop();
+    if (enemies) {
+      enemies.loop();
     }
     renderer.render(scene, camera);
   }

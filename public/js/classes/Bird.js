@@ -2,9 +2,9 @@ let mixer,
     clock = new THREE.Clock();
 
 class Bird {
-  constructor(scene) {
+  constructor(scene, position) {
     this.scene = scene;
-    // this.position = position;
+    this.position = position;
     //
 
     this.load();
@@ -16,23 +16,27 @@ class Bird {
   }
 
   create(bird) {
-    const material = new THREE.MeshNormalMaterial({ skinning: true });
-    bird.scene.children[0].children[2].material = material;
+    const mat = new THREE.MeshNormalMaterial({ skinning: true });
+    bird.scene.children[0].children[2].material = mat;
+    const geo = bird.scene.children[0].children[2].geometry;
     this.scene.add(bird.scene);
+
+    this.bird = bird.scene;
 
     //create animation
     mixer = new THREE.AnimationMixer(bird.scene);
     let clip = bird.animations[0];
     let mixerAction = mixer.clipAction(clip);
     mixerAction.setDuration(0.8).play();
+
+    this.update();
   }
 
-  update(position) {
+  update() {
     if (!this.position) {
       this.position = position;
     }
-    //
-    this.enemy.position.set(this.position.x, this.position.y, this.position.z);
+    this.bird.position.set(this.position.x, this.position.y, this.position.z);
   }
 
   loop() {
