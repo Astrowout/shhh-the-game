@@ -1,6 +1,3 @@
-let mixer,
-    clock = new THREE.Clock(),
-    birdie;
 
 class Bird {
   constructor(scene, position, angle) {
@@ -26,10 +23,12 @@ class Bird {
     this.bird = bird.scene;
 
     //create animation
-    mixer = new THREE.AnimationMixer(bird.scene);
+    this.mixer = new THREE.AnimationMixer(bird.scene);
     let clip = bird.animations[0];
-    let mixerAction = mixer.clipAction(clip);
+    let mixerAction = this.mixer.clipAction(clip);
     mixerAction.setDuration(0.8).play();
+
+    this.clock = new THREE.Clock();
 
     this.update();
   }
@@ -45,9 +44,11 @@ class Bird {
   }
 
   loop() {
-    let dt = clock.getDelta();
-    if (mixer && this.bird) {
-      mixer.update(dt)
+    if (this.mixer) {
+      let dt = this.clock.getDelta();
+      this.mixer.update(dt)
+      // console.log(this.mixer);
+      
       this.bird.position.x += this.bird.position.x * -0.01;
       this.bird.position.z += this.bird.position.z * -0.01;
 
