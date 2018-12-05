@@ -5,7 +5,7 @@ import Environment from './classes/Environment.js';
 import Enemies from './classes/Enemies.js';
 import Colors from './classes/Colors.js';
 
-import {getVolumeFromMic} from "./libs/lib.js";
+import {getVolumeFromMic, handleClickVRButton} from "./libs/lib.js";
 
 {
 
@@ -68,8 +68,9 @@ import {getVolumeFromMic} from "./libs/lib.js";
     });
     renderer.setSize(WIDTH, HEIGHT);
     renderer.shadowMap.enabled = true;
-    document.body.appendChild(WEBVR.createButton(renderer));
+    const VRButton = document.body.appendChild(WEBVR.createButton(renderer));
     renderer.vr.enabled = true;
+    VRButton.addEventListener('click', handleClickVRButton);
 
     container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);

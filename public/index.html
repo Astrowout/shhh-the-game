@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta author="Jerom Verschoote & Wout Vandesompele">
+  <meta author="Jerom Verschoote &amp; Wout Vandesompele">
   <meta decription="A VR-game for Google Cardboard">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
   <title>Shhh The Game</title>
 </head>
 <body>
+  <div class="title-container">
+    <h1 class="title">Shhh</h1>
+    <p class="under-title">The Game</p>
+  </div>
   <div id="world"></div>
   <script type="text/javascript" src="js/libs/three.js"></script>
   <script type="text/javascript" src='js/libs/GLTFLoader.js'></script>
-  <script type="text/javascript" src="js/controls/OrbitControls.js"></script>
   <script type="text/javascript" src="js/libs/WebVR.js"></script>
   <script type="text/javascript" src="js/libs/volume-meter.js"></script>
   <script src="js/script.js" type="module"></script>

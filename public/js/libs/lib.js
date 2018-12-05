@@ -5,6 +5,12 @@ export const getRandomInt = (min, max) => {
     return Math.random() * (max - min + 1) + min;
 }
 
+export const handleClickVRButton = () => {
+    const intro = document.querySelector(`.title-container`);
+    intro.classList.add("hidden");
+    intro.classList.remove("title-container");
+}
+
 export const getVolumeFromMic = () => {
     try {
         
@@ -68,4 +74,4 @@ const onVolumeChange = (time) => {
     window.requestAnimationFrame(onVolumeChange);
 }
 
-export default {getRandomInt, getVolumeFromMic};
+export default {getRandomInt, getVolumeFromMic, handleClickVRButton};
