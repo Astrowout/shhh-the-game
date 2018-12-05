@@ -1,6 +1,3 @@
-//import Sea from './classes/Sea.js';
-//import Sky from './classes/Sky.js';
-//import Plane from './classes/Plane.js';
 import Environment from './classes/Environment.js';
 import Enemies from './classes/Enemies.js';
 import Colors from './classes/Colors.js';
@@ -25,10 +22,7 @@ import {getVolumeFromMic, handleClickVRButton} from "./libs/lib.js";
 
   let hemisphereLight,
   shadowLight,
-  ambientLight,
-  campFireLight;
-
-  let mousePos = { x: 0, y: 0 };
+  ambientLight;
 
   const init = () => {
     createScene();

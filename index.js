@@ -1,8 +1,8 @@
 const https = require('https'),
-      fs = require('fs');
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 8080;
+      fs = require('fs'),
+      express = require('express'),
+      app = express(),
+      port = process.env.PORT || 8080;
 
 let options = {};
 

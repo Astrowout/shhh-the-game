@@ -1,9 +1,9 @@
 {
-  "name": "oef2",
+  "name": "shhh-the-game",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
+    "production": "NODE_ENV=production node index.js",
     "development": "PORT=8088 NODE_ENV=development node index.js",
     "generate-ssl-certs": "./scripts/generate-ssl-certs.sh"
   },
