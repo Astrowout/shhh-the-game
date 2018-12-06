@@ -1,27 +1,29 @@
-#world {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: linear-gradient(#2C5364, #203A43, #0F2027);
-    z-index: -1;
-  }
-
   body {
     margin: 0 auto;
     text-align: center;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(#2C5364, #203A43, #0F2027);
   }
 
   .hidden {
     display: none;
   }
 
+  #world {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
   .title-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
     color: white;
   }
 
@@ -32,6 +34,6 @@
   }
 
   .under-title {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 2rem;
+    font-family: monospace;
+    font-size: 2.5rem;
   }

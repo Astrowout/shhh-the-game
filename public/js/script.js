@@ -2,7 +2,7 @@ import Environment from './classes/Environment.js';
 import Enemies from './classes/Enemies.js';
 import Colors from './classes/Colors.js';
 
-import {getVolumeFromMic, handleClickVRButton} from "./libs/lib.js";
+import {getVolumeFromMic} from "./libs/lib.js";
 
 {
 
@@ -26,17 +26,6 @@ import {getVolumeFromMic, handleClickVRButton} from "./libs/lib.js";
 
   const init = () => {
     createScene();
-
-    createEnvironment();
-    createEnemies();
-
-    createLights();
-
-    window.addEventListener('touchstart', getVolumeFromMic);
-    window.addEventListener('click', getVolumeFromMic);
-    loop();
-
-    debug();
   }
 
   const createScene = () => {
@@ -62,12 +51,31 @@ import {getVolumeFromMic, handleClickVRButton} from "./libs/lib.js";
     });
     renderer.setSize(WIDTH, HEIGHT);
     renderer.shadowMap.enabled = true;
+
+    //VR
     const VRButton = document.body.appendChild(WEBVR.createButton(renderer));
     renderer.vr.enabled = true;
-    VRButton.addEventListener('click', handleClickVRButton);
+    VRButton.addEventListener('click',  handleClickVRButton);
+  }
 
-    container = document.querySelector(`#world`);
+  const handleClickVRButton = () => {
+    const intro = document.querySelector(`.title-container`);
+    intro.classList.add("hidden");
+    intro.classList.remove("title-container");
+
+    const container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);
+
+    createEnvironment();
+    createEnemies();
+
+    createLights();
+
+    window.addEventListener('touchstart', getVolumeFromMic);
+    window.addEventListener('click', getVolumeFromMic);
+    loop();
+
+    debug();
   }
 
   const createLights = () => {
