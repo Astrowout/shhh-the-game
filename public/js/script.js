@@ -2,7 +2,7 @@ import Environment from './classes/Environment.js';
 import Enemies from './classes/Enemies.js';
 import Colors from './classes/Colors.js';
 
-import {getVolumeFromMic} from "./libs/lib.js";
+// import {getVolumeFromMic} from "./libs/lib.js";
 
 {
 
@@ -69,7 +69,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
 
     createEnemies();
 
-    getVolumeFromMic();
+    // getVolumeFromMic();
     loop();
 
     debug();
@@ -119,7 +119,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnemies = () => {
-    enemies = new Enemies(20, {'x': 1000, 'y': 1000}, 50, scene);
+    enemies = new Enemies(20, 1000, 50, scene);
   }
 
   const loop = () => {

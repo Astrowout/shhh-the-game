@@ -14,7 +14,7 @@ class Forest {
   create(scene){
     this.trees = new Array(this.amount).fill('pending tree', 0, this.amount);
     this.trees.forEach((tree, index) => {
-      const randomDistance = getRandomInt(70, this.dimensions.x);
+      const randomDistance = getRandomInt(100, this.dimensions.x);
       const randomAngle = getRandomInt(0, 2 * Math.PI);
       this.trees[index] = new Tree({'x': (randomDistance * Math.cos(randomAngle)), 'y': -10, 'z': (randomDistance * Math.sin(randomAngle))}, getRandomInt(15, 30), scene);
     });

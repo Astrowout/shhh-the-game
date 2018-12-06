@@ -29,7 +29,7 @@ class Environment {
       this.stars[index] = new Star(3, false);
     });
 
-    this.clouds = new Clouds(20, 5, 1);
+    this.clouds = new Clouds(20, 4, 1);
     this.bonfire = new Bonfire({'x': 30, 'y': -15, 'z': 0}, 5, this.scene);
     this.camp = new Camp({'x': 35, 'y': -14.9, 'z': 35}, 20, this.scene);
     this.forest = new Forest(600, {'x': this.radius, 'y': this.radius}, this.scene);

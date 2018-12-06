@@ -1,5 +1,4 @@
-let meter,
-    mediaStreamSource;
+let meter;
 
 export const getRandomInt = (min, max) => {
     return Math.random() * (max - min + 1) + min;
@@ -7,12 +6,8 @@ export const getRandomInt = (min, max) => {
 
 export const getVolumeFromMic = () => {
     try {
-        
-        // Retrieve getUserMedia API with all the prefixes of the browsers
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
        
-        
-        // Ask for an audio input
         navigator.getUserMedia(
             {
                 "audio": {
@@ -29,7 +24,7 @@ export const getVolumeFromMic = () => {
             onMicrophoneDenied
         );
     } catch (e) {
-        alert("sumething wong: " + e);
+        alert("Audio error: " + e);
     }
 }
 
@@ -39,33 +34,23 @@ const onMicrophoneDenied = () => {
 
 const onMicrophoneGranted = (stream) => {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
-    // Get an audio context
     let audioContext = new AudioContext();
     audioContext.resume();
     
-    // Create an AudioNode from the stream.
-    mediaStreamSource = audioContext.createMediaStreamSource(stream);
-    
-    // Create a new volume meter and connect it.
-    meter = createAudioMeter(audioContext, 1, 0.95, 10);
+    const mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+    meter = createAudioMeter(audioContext);
     mediaStreamSource.connect(meter);
-    
-    // kick off the visual updating
+
     onVolumeChange();
 }
 
-const onVolumeChange = (time) => {
-    // check if we're currently clipping
-    if (meter.checkClipping()) {
-      console.warn(meter.volume);
-    } else {
-        if(meter.volume > .2){
-            console.log('shh');
-        }
+const onVolumeChange = () => {
+    if (meter.volume > 0.2) {
+        console.log("clipped");
     }
 
-    window.requestAnimationFrame(onVolumeChange);
+    setTimeout(onVolumeChange, 300);
 }
 
-export default {getRandomInt, getVolumeFromMic};
+export default {getRandomInt};
