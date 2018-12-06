@@ -115,7 +115,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnvironment = () => {
-    environment = new Environment(1000, 1500, scene);
+    environment = new Environment(5000, 1500, scene);
   }
 
   const createEnemies = () => {
