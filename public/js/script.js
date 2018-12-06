@@ -14,8 +14,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
       aspectRatio,
       nearPlane,
       farPlane,
-      renderer,
-      container;
+      renderer;
 
   let environment,
       enemies;
@@ -26,6 +25,8 @@ import {getVolumeFromMic} from "./libs/lib.js";
 
   const init = () => {
     createScene();
+    createEnvironment();
+    createLights();
   }
 
   const createScene = () => {
@@ -66,13 +67,9 @@ import {getVolumeFromMic} from "./libs/lib.js";
     const container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);
 
-    createEnvironment();
     createEnemies();
 
-    createLights();
-
-    window.addEventListener('touchstart', getVolumeFromMic);
-    window.addEventListener('click', getVolumeFromMic);
+    getVolumeFromMic();
     loop();
 
     debug();
@@ -118,20 +115,11 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnvironment = () => {
-    environment = new Environment(5000, 1500, scene);
+    environment = new Environment(1000, 1500, scene);
   }
 
   const createEnemies = () => {
     enemies = new Enemies(5000, 20, scene);
-  }
-
-  const normalize = (v, vmin, vmax, tmin, tmax) => {
-    const nv = Math.max(Math.min(v, vmax), vmin);
-    const dv = vmax - vmin;
-    const pc = (nv - vmin) / dv;
-    const dt = tmax - tmin;
-    const tv = tmin + (pc * dt);
-    return tv;
   }
 
   const loop = () => {

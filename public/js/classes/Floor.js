@@ -10,8 +10,8 @@ class Floor {
   }
 
   create(){
-    const geom = new THREE.PlaneGeometry(this.size.width, this.size.height, this.size.width / (this.size.width / 100), this.size.height / (this.size.height / 100));
-    geom.applyMatrix(new THREE.Matrix4().makeRotationX(1.55));
+    const geom = new THREE.PlaneGeometry(this.size.width, this.size.height, this.size.width / (this.size.width / 10), this.size.height / (this.size.height / 10));
+    geom.rotateX(Math.PI / 2);
     geom.mergeVertices();
 
     geom.vertices.forEach(vertex => {
