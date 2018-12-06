@@ -115,19 +115,20 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnvironment = () => {
-    environment = new Environment(5000, 1500, scene);
+    environment = new Environment(2000, 1500, scene);
   }
 
   const createEnemies = () => {
-    enemies = new Enemies(5000, 20, scene);
+    enemies = new Enemies(20, {'x': 1000, 'y': 1000}, 50, scene);
   }
 
   const loop = () => {
     renderer.setAnimationLoop(loop);
 
     environment.loop();
+    
     if (enemies) {
-      enemies.loop();
+      enemies.loop(scene);
     }
 
     renderer.render(scene, camera);

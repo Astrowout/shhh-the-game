@@ -1,8 +1,8 @@
 import Colors from './Colors.js';
 
-class Tree {
+class Camp {
   constructor(position, size, scene) {
-    this.position = position;
+    this.position =  position;
     this.size = size;
     //
     this.create(scene);
@@ -10,19 +10,20 @@ class Tree {
 
   create(scene){
     const loader = new THREE.GLTFLoader();
-    loader.load('../../assets/models/tree.glb', model => this.handleLoadModel(model, scene));
+    loader.load('../../assets/models/camp.glb', model => this.handleLoadModel(model, scene));
   }
 
   handleLoadModel(model, scene){
 
     const mat = new THREE.MeshPhongMaterial({
       flatShading: true,
-      color: Colors.greenDark
+      wireframe: false,
+      color: '#FF7200'
     });
-    const geo = model.scene.children[4].children[0].geometry;
+    const geo = model.scene.children[0].geometry;
 
     this.mesh = new THREE.Mesh(geo, mat);
-
+    
     this.update();
     this.render(scene);
   }
@@ -37,4 +38,4 @@ class Tree {
   }
 }
 
-export default Tree;
+export default Camp;
