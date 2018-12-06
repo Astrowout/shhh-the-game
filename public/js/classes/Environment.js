@@ -26,7 +26,7 @@ class Environment {
     this.stars = new Array(80).fill('pending star', 0, 80);
 
     this.stars.forEach((star, index) => {
-      this.stars[index] = new Star(8, false);
+      this.stars[index] = new Star(3, false);
     });
 
     this.campfire = new Campfire();
@@ -39,7 +39,7 @@ class Environment {
     this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(0, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
     this.clouds.update();
     this.campfire.update({'x': 40, 'y': 0, 'z': 0});
-    this.forest.update();
+    this.forest.update(this.scene);
   }
 
   loop(){

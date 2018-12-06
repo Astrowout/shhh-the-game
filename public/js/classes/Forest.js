@@ -13,17 +13,13 @@ class Forest {
 
   create(scene){
     this.trees = new Array(this.amount).fill('pending tree', 0, this.amount);
+  }
 
+  update(scene){
     this.trees.forEach((tree, index) => {
       const randomDistance = getRandomInt(120, 1000);
       const randomAngle = getRandomInt(0, 2 * Math.PI);
       this.trees[index] = new Tree({'x': (randomDistance * Math.cos(randomAngle)), 'y': -10, 'z': (randomDistance * Math.sin(randomAngle))}, getRandomInt(15, 30), scene);
-    });
-  }
-
-  update(){
-    this.trees.forEach(tree => {
-      //tree.update({'x': getRandomInt(-this.dimensions.x, this.dimensions.x), 'y': 0, 'z': getRandomInt(-this.dimensions.y, this.dimensions.y)});
     });
   }
 }
