@@ -1,8 +1,5 @@
 import Colors from './Colors.js';
 
-const loader = new THREE.GLTFLoader();
-
-
 class Tree {
   constructor(position, size, scene) {
     this.position = position;
@@ -12,6 +9,7 @@ class Tree {
   }
 
   create(scene){
+    const loader = new THREE.GLTFLoader();
     loader.load('../../assets/models/tree.glb', model => this.handleLoadModel(model, scene));
   }
 

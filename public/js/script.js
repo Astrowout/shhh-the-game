@@ -119,7 +119,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnemies = () => {
-    enemies = new Enemies(5000, 20, scene);
+    enemies = new Enemies(20, {'x': 1000, 'y': 1000}, scene);
   }
 
   const loop = () => {

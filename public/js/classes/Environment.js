@@ -39,7 +39,6 @@ class Environment {
     this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(0, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
     this.clouds.update();
     this.campfire.update({'x': 40, 'y': 0, 'z': 0});
-    this.forest.update(this.scene);
   }
 
   loop(){

@@ -1,62 +1,58 @@
 
 class Bird {
-  constructor(scene, position, angle) {
-    this.scene = scene;
+  constructor(position, size, entry, scene) {
     this.position = position;
-    this.angle = angle;
+    this.size = size;
+    this.entry = entry;
     //
-
-    this.load();
+    this.create(scene)
   }
 
-  load() {
+  create(scene) {
     const loader = new THREE.GLTFLoader();
-    loader.load("../assets/bird.glb", loadedModel => this.create(loadedModel));
+    loader.load("../assets/models/bird.glb", model => this.handleLoadModel(model, scene));
   }
 
-  create(bird) {
-    const mat = new THREE.MeshNormalMaterial({ skinning: true });
-    bird.scene.children[0].children[2].material = mat;
-    // const geo = bird.scene.children[0].children[2].geometry;
-    this.scene.add(bird.scene);
+  handleLoadModel(model, scene){
 
-    this.bird = bird.scene;
+    // model
+    const mat = new THREE.MeshNormalMaterial({
+      skinning: true
+    });
+    this.mesh = model.scene;
+    this.mesh.children[0].children[2].material = mat;
 
-    //create animation
-    this.mixer = new THREE.AnimationMixer(bird.scene);
-    let clip = bird.animations[0];
+    // animation
+    this.mixer = new THREE.AnimationMixer(this.mesh);
+    this.clock = new THREE.Clock();
+    let clip = model.animations[0];
     let mixerAction = this.mixer.clipAction(clip);
     mixerAction.setDuration(0.8).play();
 
-    this.clock = new THREE.Clock();
-
     this.update();
+    this.render(scene);
   }
 
   update() {
-    if (!this.position) {
-      this.position = position;
-    }
-    this.bird.position.set(this.position.x, this.position.y, this.position.z);
-
-    //set rotation to centerpoint
-    this.bird.rotation.y = -this.angle - Math.PI / 2;
+    this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+    this.mesh.rotation.y = -this.entry - Math.PI / 2; // set rotation to player
+    this.mesh.scale.set(this.size, this.size, this.size);
   }
 
   loop() {
     if (this.mixer) {
       let dt = this.clock.getDelta();
       this.mixer.update(dt)
-      // console.log(this.mixer);
       
-      this.bird.position.x += this.bird.position.x * -0.01;
-      this.bird.position.z += this.bird.position.z * -0.01;
-
-      //dive to player
-      this.bird.position.y += this.bird.position.y * -0.002;
+      this.mesh.position.x += this.mesh.position.x * -0.01;
+      this.mesh.position.z += this.mesh.position.z * -0.01;
+      this.mesh.position.y += this.mesh.position.y * -0.002;
     }
   }
+  
+  render(scene){
+    scene.add(this.mesh);
+  }
 }
-
 
 export default Bird
