@@ -3,19 +3,19 @@ import Bird from './Bird.js';
 import { getRandomInt } from "../libs/lib.js";
 
 class Enemies {
-  constructor(amount, dimension, seed, scene) {
+  constructor(amount, dimension, seed) {
     this.amount = amount;
     this.dimension = dimension;
     this.seed = seed;
     //
-    this.create(scene);
+    this.create();
   }
 
-  create(scene) {
+  create() {
     this.birds = new Array(this.amount);
   }
 
-  loop(scene) {
+  loop(scene, isSound) {
     const seed = getRandomInt(0, this.seed);
 
     if(seed < 1){
@@ -27,7 +27,11 @@ class Enemies {
 
     this.birds.forEach(bird => {
       bird.loop();
-    })
+    });
+
+    if(isSound){
+      console.log('DEBUG: sound detected');
+    }
   }
 }
 
