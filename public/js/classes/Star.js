@@ -19,7 +19,7 @@ class Star {
     this.mesh = new THREE.Mesh(geom, mat);
 
     if(this.isAlluminated){
-      this.light = new THREE.PointLight(Colors.white, 3, this.radius * 10);
+      this.light = new THREE.PointLight(Colors.white, .5, this.radius * 10);
     }
   }
 

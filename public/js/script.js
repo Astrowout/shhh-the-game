@@ -67,7 +67,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
     const container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);
 
-    createEnemies();
+    //createEnemies();
 
     getVolumeFromMic();
     loop();
@@ -115,7 +115,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
   }
 
   const createEnvironment = () => {
-    environment = new Environment(1000, 1500, scene);
+    environment = new Environment(2000, 1500, scene);
   }
 
   const createEnemies = () => {
@@ -126,6 +126,7 @@ import {getVolumeFromMic} from "./libs/lib.js";
     renderer.setAnimationLoop(loop);
 
     environment.loop();
+    
     if (enemies) {
       enemies.loop();
     }

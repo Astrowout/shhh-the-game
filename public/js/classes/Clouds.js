@@ -16,7 +16,7 @@ class Clouds {
     this.clouds = new Array(this.amount).fill('pending cloud', 0, this.amount);
     //
     this.clouds.forEach((cloud, index) => {
-      this.clouds[index] = new Cloud(this.size / 5 , this.speed * 2);
+      this.clouds[index] = new Cloud(this.size / 4 , this.speed * 2);
     });
   }
 

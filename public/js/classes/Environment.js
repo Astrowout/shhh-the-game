@@ -21,16 +21,16 @@ class Environment {
   create(){
     this.sky = new Sky(this.radius);
     this.floor = new Floor({'width': this.radius, 'height': this.radius}, 0);
-    this.clouds = new Clouds(20, 5, 1);
-    this.moon = new Star(100, true);
+    this.moon = new Star(200, true);
     this.stars = new Array(80).fill('pending star', 0, 80);
 
     this.stars.forEach((star, index) => {
       this.stars[index] = new Star(3, false);
     });
 
+    this.clouds = new Clouds(20, 5, 1);
     this.campfire = new Campfire();
-    this.forest = new Forest(300, {'x': this.radius, 'y': this.radius}, this.scene);
+    this.forest = new Forest(600, {'x': this.radius, 'y': this.radius}, this.scene);
   }
 
   update(){
@@ -38,7 +38,7 @@ class Environment {
     this.moon.update({'x': 0, 'y': this.height - 500 , 'z': -1000});
     this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(0, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
     this.clouds.update();
-    this.campfire.update({'x': 40, 'y': 0, 'z': 0});
+    this.campfire.update({'x': 30, 'y': 0, 'z': 0});
   }
 
   loop(){
