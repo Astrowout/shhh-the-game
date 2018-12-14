@@ -13,15 +13,10 @@ class Sky {
     const mat = new THREE.MeshPhongMaterial({
       color: Colors.purpleLight,
       side: THREE.DoubleSide,
-      wireframe: false,
       flatShading: true
     });
     //
     this.mesh = new THREE.Mesh(geom, mat);
-  }
-
-  update(){
-    this.mesh.position.set(this.position.x, this.position.y, this.position.z);
   }
 }
 

@@ -11,7 +11,7 @@ class Clouds {
 
   create(){
     this.mesh = new THREE.Object3D();
-    this.mesh.applyMatrix(new THREE.Matrix4().makeRotationX(1.6));
+    this.mesh.applyMatrix(new THREE.Matrix4().makeRotationX(Math.PI / 2));
     //
     this.clouds = new Array(this.amount).fill('pending cloud', 0, this.amount);
     //

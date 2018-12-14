@@ -2,8 +2,6 @@ import Environment from './classes/Environment.js';
 import Enemies from './classes/Enemies.js';
 import Colors from './classes/Colors.js';
 
-// import {getVolumeFromMic} from "./libs/lib.js";
-
 {
 
   let scene,
@@ -24,14 +22,20 @@ import Colors from './classes/Colors.js';
   ambientLight;
 
   let meter,
-    mediaStreamSource,
-    isSound;
+      birdScared;
 
   const init = () => {
     createScene();
     createEnvironment();
     createLights();
+    
+    // window.addEventListener("deviceorientation", handleOrientation, true);
   }
+
+  // const handleOrientation = e => {
+  //   let playerRotation = e.alpha;
+  //   console.log(playerRotation);
+  // }
 
   const createScene = () => {
     WIDTH = window.innerWidth;
@@ -42,7 +46,7 @@ import Colors from './classes/Colors.js';
     aspectRatio = WIDTH / HEIGHT;
     fieldOfView = 180;
     nearPlane = 1;
-    farPlane= 10000;
+    farPlane= 2000;
     camera = new THREE.PerspectiveCamera(
       fieldOfView,
       aspectRatio,
@@ -60,20 +64,20 @@ import Colors from './classes/Colors.js';
     //VR
     const VRButton = document.body.appendChild(WEBVR.createButton(renderer));
     renderer.vr.enabled = true;
-    VRButton.addEventListener('click',  handleClickVRButton);
+    VRButton.addEventListener('click', handleClickVRButton);
   }
 
   const handleClickVRButton = () => {
-    const intro = document.querySelector(`.title-container`);
-    intro.classList.add("hidden");
-    intro.classList.remove("title-container");
+    let intro = document.querySelector(`.title-container-js`);
+    intro.classList.toggle("hidden");
+    intro.classList.toggle("title-container");
 
     const container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);
 
     createEnemies();
 
-    // getVolumeFromMic();
+    getVolumeFromMic();
     loop();
 
     debug();
@@ -92,7 +96,7 @@ import Colors from './classes/Colors.js';
 
 
     // Set the direction of the light
-    shadowLight.position.set(300, 350, 350);
+    shadowLight.position.set(0, HEIGHT - 500, -1000);
 
     // Allow shadow casting
     shadowLight.castShadow = true;
@@ -123,16 +127,20 @@ import Colors from './classes/Colors.js';
   }
 
   const createEnemies = () => {
-    enemies = new Enemies(20, 1000, 50, scene);
+    enemies = new Enemies(20, 1000, 50);
   }
 
   const loop = () => {
     renderer.setAnimationLoop(loop);
-
+    
     environment.loop();
+
+    if (meter) {
+      onVolumeChange();
+    }
     
     if (enemies) {
-      enemies.loop(scene, isSound);
+      enemies.loop(scene, birdScared);
     }
 
     renderer.render(scene, camera);
@@ -144,67 +152,48 @@ import Colors from './classes/Colors.js';
 
   const getVolumeFromMic = () => {
     try {
-        // Retrieve getUserMedia API with all the prefixes of the browsers
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-        
-        // Ask for an audio input
-        navigator.getUserMedia(
-            {
-                "audio": {
-                    "mandatory": {
-                        "googEchoCancellation": "false",
-                        "googAutoGainControl": "false",
-                        "googNoiseSuppression": "false",
-                        "googHighpassFilter": "false"
-                    },
-                    "optional": []
-                },
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+      navigator.getUserMedia(
+        {
+          "audio": {
+            "mandatory": {
+              "googEchoCancellation": "false",
+              "googAutoGainControl": "false",
+              "googNoiseSuppression": "false",
+              "googHighpassFilter": "false"
             },
-            onMicrophoneGranted,
-            onMicrophoneDenied
-        );
+            "optional": []
+          },
+        },
+        onMicrophoneGranted,
+        onMicrophoneDenied
+      );
     } catch (e) {
-        alert("sumething wong: " + e);
+      alert("Audio error: " + e);
     }
-}
+  }
 
   const onMicrophoneDenied = () => {
-     alert("Stream generation failed.");
+    alert("Stream generation failed.");
   }
 
   const onMicrophoneGranted = (stream) => {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
-    // Get an audio context
     let audioContext = new AudioContext();
     audioContext.resume();
-    
-    // Create an AudioNode from the stream.
-    mediaStreamSource = audioContext.createMediaStreamSource(stream);
-    
-    // Create a new volume meter and connect it.
-    meter = createAudioMeter(audioContext, 1, 0.95, 10);
+
+    const mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+    meter = createAudioMeter(audioContext);
     mediaStreamSource.connect(meter);
-    
-    // kick off the visual updating
-    onVolumeChange();
-}
+  }
 
-const onVolumeChange = (time) => {
-    isSound = false;
-    // check if we're currently clipping
-    if (meter.checkClipping()) {
-      console.warn(meter.volume);
-    } else {
-        if(meter.volume > .2){
-          isSound = true;
-        }else{
-          isSound = false;
-        }
+  const onVolumeChange = () => {
+    if (meter.volume > 0.2) {
+      birdScared = true;
     }
-
-    window.requestAnimationFrame(onVolumeChange);
-}
+  }
 
 
   init();

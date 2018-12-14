@@ -1,9 +1,10 @@
 
 class Bird {
-  constructor(position, size, entry, scene) {
+  constructor(position, size, entry, birdScared, scene) {
     this.position = position;
     this.size = size;
     this.entry = entry;
+    this.birdScared = birdScared;
     //
     this.create(scene)
   }
@@ -40,15 +41,38 @@ class Bird {
   }
 
   loop() {
-    if (this.mixer) {
-      let dt = this.clock.getDelta();
-      this.mixer.update(dt)
-      
-      this.mesh.position.x += this.mesh.position.x * -0.01;
-      this.mesh.position.z += this.mesh.position.z * -0.01;
-      this.mesh.position.y += this.mesh.position.y * -0.002;
-    }
+    if (this.mesh) {
+      if (this.mixer) {
+        let dt = this.clock.getDelta();
+        this.mixer.update(dt)
+      }
+
+      if (!this.birdScared) {
+        this.mesh.position.x -= this.mesh.position.x * 0.01;
+        this.mesh.position.z -= this.mesh.position.z * 0.01;
+        this.mesh.position.y -= this.mesh.position.y * 0.002;
+      } else {
+        console.log("hescared");
+        this.mesh.rotation.y = -this.entry + Math.PI / 2;
+        this.mesh.position.x += this.mesh.position.x * 0.02;
+        this.mesh.position.z += this.mesh.position.z * 0.02;
+        this.mesh.position.y += this.mesh.position.y * 0.004;
+      }
+    } 
   }
+
+  // attackLoop() {
+  //   if (this.birdScared && this.mesh) {
+  //     console.log("he scared");
+  //     this.scaredLoop();
+  //   } else if (this.mesh) {
+  //     this.mesh.position.x -= this.mesh.position.x * 0.01;
+  //     this.mesh.position.z -= this.mesh.position.z * 0.01;
+  //     this.mesh.position.y -= this.mesh.position.y * 0.002;
+  //   }
+  // }
+
+
   
   render(scene){
     scene.add(this.mesh);
