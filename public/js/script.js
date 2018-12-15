@@ -20,10 +20,10 @@ import Colors from './classes/Colors.js';
   let hemisphereLight,
   shadowLight;
 
-  let meter,
-      birdScared;
+  let meter;
 
   const init = () => {
+    //
     createScene();
     createEnvironment();
     createLights();
@@ -75,7 +75,7 @@ import Colors from './classes/Colors.js';
     const container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);
 
-    // createEnemies();
+    createEnemies();
 
     getVolumeFromMic();
     loop();
@@ -126,12 +126,12 @@ import Colors from './classes/Colors.js';
     
     environment.loop();
 
-    if (meter) {
+    if(meter){
       onVolumeChange();
     }
     
-    if (enemies) {
-      enemies.loop(scene, birdScared);
+    if(enemies){
+      enemies.loop(scene);
     }
 
     renderer.render(scene, camera);
@@ -181,8 +181,15 @@ import Colors from './classes/Colors.js';
   }
 
   const onVolumeChange = () => {
+
     if (meter.volume > 0.2) {
-      birdScared = true;
+      //console.log("DEBUG: 'Shh' detected");
+
+      if(enemies.birds){
+        enemies.birds.forEach((bird, index) => {
+          bird.scared = true;
+        });
+      }
     }
   }
 

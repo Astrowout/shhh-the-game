@@ -1,20 +1,23 @@
 
 class Bird {
-  constructor(position, size, entry, birdScared, scene) {
+  constructor(position, scale, speed, entry, scene) {
     this.position = position;
-    this.size = size;
+    this.scale = scale;
     this.entry = entry;
-    this.birdScared = birdScared;
+    this.speed = speed;
+    this.scene = scene;
     //
-    this.create(scene)
+    this.scared = false;
+    //
+    this.create()
   }
 
-  create(scene) {
+  create() {
     const loader = new THREE.GLTFLoader();
-    loader.load("../assets/models/bird.glb", model => this.handleLoadModel(model, scene));
+    loader.load("../assets/models/bird.glb", model => this.handleLoadModel(model));
   }
 
-  handleLoadModel(model, scene){
+  handleLoadModel(model){
 
     // model
     const mat = new THREE.MeshNormalMaterial({
@@ -31,51 +34,43 @@ class Bird {
     mixerAction.setDuration(1).play();
 
     this.update();
-    this.render(scene);
+    this.render();
   }
 
   update() {
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
-    this.mesh.rotation.y = -this.entry - Math.PI / 2; // set rotation to player
-    this.mesh.scale.set(this.size, this.size, this.size);
+    this.mesh.rotation.y = -this.entry - Math.PI / 2;;
+    this.mesh.scale.set(this.scale, this.scale, this.scale);
   }
 
   loop() {
-    if (this.mesh) {
-      if (this.mixer) {
+    if(this.mesh){
+      if(this.mixer){
         let dt = this.clock.getDelta();
         this.mixer.update(dt)
       }
 
-      if (!this.birdScared) {
-        this.mesh.position.x -= this.mesh.position.x * 0.01;
-        this.mesh.position.z -= this.mesh.position.z * 0.01;
-        this.mesh.position.y -= this.mesh.position.y * 0.002;
-      } else {
-        console.log("hescared");
-        this.mesh.rotation.y = -this.entry + Math.PI / 2;
-        this.mesh.position.x += this.mesh.position.x * 0.02;
-        this.mesh.position.z += this.mesh.position.z * 0.02;
-        this.mesh.position.y += this.mesh.position.y * 0.004;
+      if(!this.scared){
+        this.mesh.position.x -= this.mesh.position.x * (this.speed * 0.02);
+        this.mesh.position.z -= this.mesh.position.z * (this.speed * 0.02);
+        this.mesh.position.y -= this.mesh.position.y * (this.speed * 0.01);
+      }else{
+        console.log("DEBUG: Enemie scared");
+        //
+        this.mesh.rotation.y =  -this.entry + Math.PI / 2;
+        this.mesh.position.x += this.mesh.position.x * (this.speed * 0.07);
+        this.mesh.position.z += this.mesh.position.z * (this.speed * 0.07);
+        this.mesh.position.y += this.mesh.position.y * (this.speed * 0.05);
       }
-    } 
+    }
   }
 
-  // attackLoop() {
-  //   if (this.birdScared && this.mesh) {
-  //     console.log("he scared");
-  //     this.scaredLoop();
-  //   } else if (this.mesh) {
-  //     this.mesh.position.x -= this.mesh.position.x * 0.01;
-  //     this.mesh.position.z -= this.mesh.position.z * 0.01;
-  //     this.mesh.position.y -= this.mesh.position.y * 0.002;
-  //   }
-  // }
+  render(){
+    this.scene.add(this.mesh);
+  }
 
-
-  
-  render(scene){
-    scene.add(this.mesh);
+  kill(){
+    this.scene.remove(this.mesh);
   }
 }
 
