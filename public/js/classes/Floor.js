@@ -10,7 +10,7 @@ class Floor {
   }
 
   create(){
-    const geom = new THREE.PlaneGeometry(this.size.width, this.size.height, this.size.width / (this.size.width / 10), this.size.height / (this.size.height / 10));
+    const geom = new THREE.PlaneGeometry(this.size.width, this.size.height, this.size.width / (this.size.width / 30), this.size.height / (this.size.height / 30));
     geom.rotateX(Math.PI / 2);
     geom.mergeVertices();
 
@@ -27,6 +27,7 @@ class Floor {
     })
     //
     this.mesh = new THREE.Mesh(geom, mat);
+    this.mesh.receiveShadow = true;
   }
 
   update(position){

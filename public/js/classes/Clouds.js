@@ -16,7 +16,7 @@ class Clouds {
     this.clouds = new Array(this.amount).fill('pending cloud', 0, this.amount);
     //
     this.clouds.forEach((cloud, index) => {
-      this.clouds[index] = new Cloud(this.size / 4 , this.speed * 2);
+      this.clouds[index] = new Cloud(this.size / 4 , this.speed * 3);
     });
   }
 
@@ -25,7 +25,7 @@ class Clouds {
       const stepAngle = Math.PI * 2 / this.clouds.length;
       const a = stepAngle * index;
       const h = 1100 + Math.random() * 40;
-      cloud.mesh.position.y = Math.sin(a) * h;
+      cloud.mesh.position.y = Math.sin(a) * 1500;
       cloud.mesh.position.x = Math.cos(a) * h;
       cloud.mesh.rotation.z = a + Math.PI / 2;
       cloud.mesh.position.z = -400 - Math.random() * 400;

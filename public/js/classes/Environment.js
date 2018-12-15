@@ -1,4 +1,3 @@
-import Sky from './Sky.js';
 import Floor from './Floor.js';
 import Clouds from './Clouds.js';
 import Star from './Star.js';
@@ -20,7 +19,6 @@ class Environment {
   }
 
   create(){
-    this.sky = new Sky(this.radius);
     this.floor = new Floor({'width': this.radius, 'height': this.radius}, 0);
     this.moon = new Star(200, true);
     this.stars = new Array(80).fill('pending star', 0, 80);
@@ -38,7 +36,7 @@ class Environment {
   update(){
     this.floor.update({'x': 0, 'y': -15, 'z': 0});
     this.moon.update({'x': 0, 'y': this.height - 500 , 'z': -1000});
-    this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(0, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
+    this.stars.forEach(star => star.update({'x': getRandomInt(-this.radius, this.radius), 'y': getRandomInt(100, this.height), 'z': getRandomInt(-this.radius, this.radius)}));
     this.clouds.update();
   }
 
@@ -47,7 +45,6 @@ class Environment {
   }
 
   render(){
-    this.scene.add(this.sky.mesh);
     this.scene.add(this.floor.mesh);
     this.scene.add(this.clouds.mesh);
     this.scene.add(this.moon.mesh);

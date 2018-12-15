@@ -1,6 +1,6 @@
 let Colors = {
   purpleDark: "#130D15",
-  purpleLight: "#2B1D2F",
+  purpleLight: "#443340",
   greenDark: "#163F45",
   greenLight: "#2D695E",
   brownDark: "#8D8172",

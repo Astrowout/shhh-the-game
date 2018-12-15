@@ -13,8 +13,8 @@ class Cloud {
   create(){
     this.mesh = new THREE.Object3D();
     const geom = new THREE.DodecahedronGeometry(15, 0);
-    const mat = new THREE.MeshPhongMaterial({
-      color: Colors.purpleDark,
+    const mat = new THREE.MeshLambertMaterial({
+      color: Colors.purpleLight,
     });
 
     let nBlocs = 3 + Math.floor(Math.random() * 3);
@@ -31,7 +31,6 @@ class Cloud {
       let s = .8 + Math.random()*this.size;
       m.scale.set(s,s,s);
       
-      m.castShadow = true;
       m.receiveShadow = true;
       
       this.mesh.add(m);

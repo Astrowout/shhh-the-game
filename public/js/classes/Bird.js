@@ -28,7 +28,7 @@ class Bird {
     this.clock = new THREE.Clock();
     let clip = model.animations[0];
     let mixerAction = this.mixer.clipAction(clip);
-    mixerAction.setDuration(0.8).play();
+    mixerAction.setDuration(1).play();
 
     this.update();
     this.render(scene);

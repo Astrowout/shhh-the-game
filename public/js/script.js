@@ -18,8 +18,7 @@ import Colors from './classes/Colors.js';
       enemies;
 
   let hemisphereLight,
-  shadowLight,
-  ambientLight;
+  shadowLight;
 
   let meter,
       birdScared;
@@ -42,6 +41,7 @@ import Colors from './classes/Colors.js';
     HEIGHT = window.innerHeight;
 
     scene = new THREE.Scene();
+    scene.background = new THREE.Color(Colors.purpleDark);
 
     aspectRatio = WIDTH / HEIGHT;
     fieldOfView = 180;
@@ -75,7 +75,7 @@ import Colors from './classes/Colors.js';
     const container = document.querySelector(`#world`);
     container.appendChild(renderer.domElement);
 
-    createEnemies();
+    // createEnemies();
 
     getVolumeFromMic();
     loop();
@@ -84,42 +84,33 @@ import Colors from './classes/Colors.js';
   }
 
   const createLights = () => {
-    // A hemisphere light is a gradient colored light;
-    // the first parameter is the sky color, the second parameter is the ground color,
-    // the third parameter is the intensity of the light
     hemisphereLight = new THREE.HemisphereLight(Colors.purpleLight, Colors.greenLight);
-
-    //A directional light shines from a specific direction.
-    //It acts like the sun, that means that all the rays produced are parallel.
-    shadowLight = new THREE.DirectionalLight(0xffffff, .4);
-
-
-
+    shadowLight = new THREE.DirectionalLight(0xffffff, .3);
+    
     // Set the direction of the light
-    shadowLight.position.set(0, HEIGHT - 500, -1000);
+    shadowLight.position.set(0, 1500, -1000);
 
     // Allow shadow casting
     shadowLight.castShadow = true;
 
     // define the visible area of the projected shadow
-    shadowLight.shadow.camera.left = -400;
-    shadowLight.shadow.camera.right = 400;
-    shadowLight.shadow.camera.top = 400;
-    shadowLight.shadow.camera.bottom = -400;
+    shadowLight.shadow.camera.left = -500;
+    shadowLight.shadow.camera.right = 500;
+    shadowLight.shadow.camera.top = 500;
+    shadowLight.shadow.camera.bottom = -1000;
     shadowLight.shadow.camera.near = 1;
-    shadowLight.shadow.camera.far = 1000;
+    shadowLight.shadow.camera.far = 2000;
 
     // define the resolution of the shadow; the higher the better,
     // but also the more expensive and less performant
     shadowLight.shadow.mapSize.width = 2048;
     shadowLight.shadow.mapSize.height = 2048;
 
-    //ambientLight = new THREE.AmbientLight (0xdc8874, .8);
-
     // to activate the lights, just add them to the scene
+    // hemiLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 10);
+    // scene.add(hemiLightHelper);
     scene.add(hemisphereLight);
     scene.add(shadowLight);
-    //scene.add(ambientLight);
   }
 
   const createEnvironment = () => {

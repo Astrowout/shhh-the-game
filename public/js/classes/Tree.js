@@ -22,6 +22,8 @@ class Tree {
     const geo = model.scene.children[4].children[0].geometry;
 
     this.mesh = new THREE.Mesh(geo, mat);
+    this.mesh.castShadow = true;
+    this.mesh.receiveShadow = true;
 
     this.update();
     this.render(scene);
