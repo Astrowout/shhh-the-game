@@ -1,10 +1,11 @@
 {
   "name": "shhh-the-game",
-  "version": "1.0.0",
+  "version": "1",
   "main": "index.js",
   "scripts": {
     "production": "NODE_ENV=production node index.js",
     "development": "PORT=8088 NODE_ENV=development node index.js",
+    "start": "node index.js",
     "generate-ssl-certs": "./scripts/generate-ssl-certs.sh"
   },
   "license": "MIT",
