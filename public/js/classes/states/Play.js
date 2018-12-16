@@ -11,7 +11,7 @@ export default class Play {
     this.lighting = new Lighting();
     this.environment = new Environment(2000, 1500, this.scene.scene);
     this.mechanics = new Mechanics(5, 0, 0.1);
-    this.interface = new Interface();
+    this.interface = new Interface(this.mechanics.health);
   }
 
   init(){
@@ -72,6 +72,8 @@ export default class Play {
         this.mechanics.health -= 1;
         console.log("DEBUG: Life lost. Current health: ", this.mechanics.health);
         this.enemies.collision = false;
+        //
+        this.interface.update(this.scene.camera, this.mechanics.health);
       }
     }
 
@@ -87,5 +89,6 @@ export default class Play {
     this.mechanics.health = 5;
     this.mechanics.gameOver = false;
     this.enemies.killAll(this.scene.scene);
+    this.interface.create(this.scene.camera);
   }
 }

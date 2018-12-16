@@ -3,16 +3,25 @@ import Colors from '../Colors.js';
 import Heart from '../objects/Heart.js';
 
 export default class Interface {
-    constructor() {
-        this.heart = new Heart({'x': -8, 'y': 8, 'z': -15}, 0.03);
+    constructor(amount) {
+        this.amount = amount;
     }
 
     create(scene){
-        this.heart.create(scene);
+        console.log("DEBUG: Game started");
+        //
+        this.lifes = new Array(this.amount).fill('pending life', 0, this.amount);
+        this.lifes.forEach((life, index) => {
+            const space = 3;
+            this.lifes[index] = new Heart({'x': -6 + (index * space), 'y': -10, 'z': -11}, 0.025);
+        });
+
+        this.lifes.forEach(life => {life.create(scene)});
     }
 
-    update(){
-        //
+    update(scene, amount){
+        scene.remove(this.lifes[amount].mesh);
+        this.lifes.splice(amount, 1);
     }
 
     render(scene){
@@ -20,6 +29,5 @@ export default class Interface {
     }
 
     loop(){
-        //
     }
   }
