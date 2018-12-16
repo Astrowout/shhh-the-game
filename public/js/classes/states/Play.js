@@ -9,7 +9,7 @@ export default class Play {
     this.scene = new Scene(180, 1, 2000);
     this.lighting = new Lighting();
     this.environment = new Environment(2000, 1500, this.scene.scene);
-    this.mechanics = new Mechanics(5, 0, 0.2);
+    this.mechanics = new Mechanics(5, 0, 0.15);
   }
 
   init(){
@@ -48,13 +48,13 @@ export default class Play {
     this.scene.loop();
     this.lighting.loop();
     this.environment.loop();
-    this.mechanics.loop();
+    this.mechanics.loop(this.enemies, this.scene);
 
 
     // EVENTS
 
     if(this.mechanics.VREnabled){
-      this.enemies.loop(this.scene.scene, this.mechanics.soundDetected); // TODO: this.scene.scene doorgeven via this.render (promised based models)
+      this.enemies.loop(this.scene.scene, this.mechanics.soundDetected, this.mechanics.enemiesIntersected); // TODO: this.scene.scene doorgeven via this.render (promised based models)
     }
 
     if(this.enemies){

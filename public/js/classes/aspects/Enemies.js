@@ -25,7 +25,7 @@ class Enemies {
     //
   }
 
-  loop(scene, soundDetected) {
+  loop(scene, soundDetected, enemiesIntersected) {
 
     if(this.birds.length < this.amount){
       const seed = getRandomInt(0, this.seed);
@@ -35,7 +35,7 @@ class Enemies {
         //
         const distanceOrigin = this.dimension / 2;
         const randomAngle = getRandomInt(0, 2 * Math.PI);
-        this.birds.push(new Bird({'x': distanceOrigin * Math.cos(randomAngle), 'y': 25, 'z': distanceOrigin * Math.sin(randomAngle)}, 5, 1, randomAngle, scene));
+        this.birds.push(new Bird({'x': distanceOrigin * Math.cos(randomAngle), 'y': 25, 'z': distanceOrigin * Math.sin(randomAngle)}, 5, 1, randomAngle, enemiesIntersected, scene));
       }
     }
     
@@ -53,10 +53,7 @@ class Enemies {
     // EVENTS
 
     if(soundDetected){
-      this.birds.forEach(bird => {
-        bird.scared = true;
         this.scared = true;
-      });
     }
 
     this.birds.forEach((bird, index) => {

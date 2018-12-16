@@ -1,4 +1,3 @@
-
 export default class Mechanics {
     constructor(health, score, soundRange) {
         this.mic;
@@ -11,10 +10,16 @@ export default class Mechanics {
         this.VREnabled = false;
         this.soundDetected = false;
         this.gameOver = false;
+        //
+        this.raycaster;
+        this.enemiesIntersected = [];
+        this.intersected;
+
+        this.create();
     }
 
     create(){
-        // this.raycaster = new THREE.Raycaster();
+        this.raycaster = new THREE.Raycaster();
     }
 
     update(){
@@ -25,21 +30,39 @@ export default class Mechanics {
         //
     }
 
-    loop(){
-        if(this.mic){
-            if(this.mic.volume > this.soundRange){
-                console.log("DEBUG: Sound detected");
-                //
-                this.soundDetected = true;
-            }else{
-                this.soundDetected = false;
-            }
+    loop(enemies, scene){
+        this.raycaster.setFromCamera({ x: 0, y: 0 }, scene.camera);
+        let intersects = this.raycaster.intersectObjects(this.enemiesIntersected, true);
+        if (intersects.length > 0) {
+            this.intersected = intersects[0].object.parent.id;
+            this.onVolumeChange(enemies);
+        } else {
+            this.intersected = undefined;
         }
 
         if(this.health <= 0){
             console.log("DEBUG: Game Over");
             //
             this.gameOver = true;
+        }
+    }
+
+    onVolumeChange(enemies){
+        if (this.mic) {
+            if (this.mic.volume > this.soundRange) {
+                if (enemies.birds) {
+                    enemies.birds.forEach(bird => {
+                        if (bird.mesh) {
+                            if (bird.mesh.children[0].id == this.intersected) {
+                                bird.scared = true;
+                                this.soundDetected = true;
+                            }
+                        }
+                    });
+                }
+            } else {
+                this.soundDetected = false;
+            }
         }
     }
   }
