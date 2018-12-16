@@ -51,11 +51,7 @@ export default class Play {
     this.mechanics.loop();
 
     if(this.mechanics.VREnabled){
-      this.enemies.loop(this.scene.scene); // TODO: this.scene.scene doorgeven via this.render (promised based models)
-    }
-
-    if(this.mechanics.soundDetected){
-      this.enemies.update(true);
+      this.enemies.loop(this.scene.scene, this.mechanics.soundDetected); // TODO: this.scene.scene doorgeven via this.render (promised based models)
     }
   }
 

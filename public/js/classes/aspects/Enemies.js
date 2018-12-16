@@ -1,4 +1,4 @@
-import Bird from '../Bird.js';
+import Bird from '../objects/Bird.js';
 //
 import { getRandomInt } from "../../libs/lib.js";
 
@@ -14,18 +14,19 @@ class Enemies {
     //
   }
 
-  update(scared){
-
-    if(scared){
-      this.birds.forEach(bird => {bird.scared = true});
-    }
+  update(){
+    //
   }
 
   render(){
     //
   }
 
-  loop(scene) {
+  loop(scene, soundDetected) {
+
+    if(soundDetected){
+      this.birds.forEach(bird => {bird.scared = true});
+    }
 
     if(this.birds.length < this.amount){
       const seed = getRandomInt(0, this.seed);
@@ -44,17 +45,17 @@ class Enemies {
 
       if(bird.mesh){
         if(Math.abs(bird.position.x) < Math.abs(bird.mesh.position.x) && Math.abs(bird.position.z) < Math.abs(bird.mesh.position.z)){
-          this.kill(bird, index);
+          this.kill(bird, index, scene);
         }
       }
     });
   }
 
-  kill(bird, index){
+  kill(bird, index, scene){
     console.log("DEBUG: Enemy erased from array");
     //
     this.birds.splice(index, 1);
-    bird.kill();
+    bird.kill(scene);
   }
 }
 

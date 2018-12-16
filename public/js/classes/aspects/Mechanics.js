@@ -27,6 +27,8 @@ export default class Mechanics {
                 console.log("DEBUG: 'Shh' detected");
                 //
                 this.soundDetected = true;
+            }else{
+                this.soundDetected = false;
             }
         }
     }
