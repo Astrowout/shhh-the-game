@@ -9,7 +9,6 @@ class Enemies {
     this.seed = seed;
     this.birds = [];
     //
-    this.scared = false;
     this.collision = false;
   }
 
@@ -25,7 +24,7 @@ class Enemies {
     //
   }
 
-  loop(scene, soundDetected, enemiesIntersected) {
+  loop(scene, enemiesIntersected) {
 
     if(this.birds.length < this.amount){
       const seed = getRandomInt(0, this.seed);
@@ -40,7 +39,7 @@ class Enemies {
     }
     
     this.birds.forEach((bird, index) => {
-      bird.loop();
+      bird.loop(scene);
 
       if(bird.mesh){
         if(Math.abs(bird.position.x) < Math.abs(bird.mesh.position.x) && Math.abs(bird.position.z) < Math.abs(bird.mesh.position.z)){
@@ -51,10 +50,6 @@ class Enemies {
 
 
     // EVENTS
-
-    if(soundDetected){
-        this.scared = true;
-    }
 
     this.birds.forEach((bird, index) => {
       if(bird.collision){

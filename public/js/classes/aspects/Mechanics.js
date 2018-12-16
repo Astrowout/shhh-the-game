@@ -50,12 +50,12 @@ export default class Mechanics {
     onVolumeChange(enemies){
         if (this.mic) {
             if (this.mic.volume > this.soundRange) {
-                if (enemies.birds) {
+                if(enemies.birds) {
                     enemies.birds.forEach(bird => {
-                        if (bird.mesh) {
-                            if (bird.mesh.children[0].id == this.intersected) {
+                        if(bird.mesh){
+                            if(bird.mesh.children[0].id == this.intersected) {
                                 bird.scared = true;
-                                this.soundDetected = true;
+                                //this.soundDetected = true;
                             }
                         }
                     });

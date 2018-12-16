@@ -10,6 +10,8 @@ class Bird {
     //
     this.collision = false;
     this.scared = false;
+    this.valued = false;
+    //
     this.object;
     //
     this.create(scene);
@@ -50,7 +52,7 @@ class Bird {
     this.render(scene);
   }
 
-  loop() {
+  loop(scene) {
     if(this.mesh){
       if(this.mixer){
         let dt = this.clock.getDelta();
@@ -68,6 +70,10 @@ class Bird {
         this.mesh.position.x += this.mesh.position.x * (this.speed * 0.07);
         this.mesh.position.z += this.mesh.position.z * (this.speed * 0.07);
         this.mesh.position.y += this.mesh.position.y * (this.speed * 0.05);
+      }
+
+      if(this.coin){
+        this.coin.loop();
       }
 
       if(Math.abs(this.mesh.position.x) < 10 && Math.abs(this.mesh.position.z) < 10){

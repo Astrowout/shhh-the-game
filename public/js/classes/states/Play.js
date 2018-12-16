@@ -4,6 +4,7 @@ import Lighting from '../aspects/Lighting.js';
 import Mechanics from '../aspects/Mechanics.js';
 import Enemies from '../aspects/Enemies.js';
 import Interface from '../aspects/Interface.js';
+import Coin from '../objects/Coin.js';
 
 export default class Play {
   constructor(){
@@ -21,7 +22,7 @@ export default class Play {
   }
 
   create(){
-    this.enemies = new Enemies(5, 1000, 50);
+    this.enemies = new Enemies(1, 1000, 50);
     //
     this.scene.create();
     this.lighting.create();
@@ -53,27 +54,34 @@ export default class Play {
     this.environment.loop();
     this.mechanics.loop(this.enemies, this.scene);
 
-
     // EVENTS
 
     if(this.mechanics.VREnabled){
-      this.enemies.loop(this.scene.scene, this.mechanics.soundDetected, this.mechanics.enemiesIntersected); // TODO: this.scene.scene doorgeven via this.render (promised based models)
+      this.enemies.loop(this.scene.scene, this.mechanics.enemiesIntersected); // TODO: this.scene.scene doorgeven via this.render (promised based models)
     }
 
     if(this.enemies){
 
-      if(this.enemies.scared){
-        this.mechanics.score += 10;
-        console.log("DEBUG: Points gained. Current points: ", this.mechanics.score);
-        this.enemies.scared = false;
-      }
+      this.enemies.birds.forEach(bird => {
+        if(bird.scared){
+          if(!bird.valued){
+            this.mechanics.score += 10;
+            console.log("DEBUG: Points gained. Current points: ", this.mechanics.score);
+            bird.valued = true;
+            bird.coin = new Coin({'x': bird.mesh.position.x, 'y': bird.mesh.position.y, 'z': bird.mesh.position.z}, 5);
+            bird.coin.create(this.scene.scene);
+          }
+        }
+      });
 
       if(this.enemies.collision){
         this.mechanics.health -= 1;
         console.log("DEBUG: Life lost. Current health: ", this.mechanics.health);
         this.enemies.collision = false;
         //
-        this.interface.update(this.scene.camera, this.mechanics.health);
+        if(this.mechanics.health >= 0){
+          this.interface.update(this.scene.camera, this.mechanics.health);
+        }
       }
     }
 
