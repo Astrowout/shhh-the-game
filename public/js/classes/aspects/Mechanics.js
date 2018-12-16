@@ -1,3 +1,5 @@
+let tempTime;
+
 export default class Mechanics {
     constructor(health, score, soundRange) {
         this.mic;
@@ -14,12 +16,13 @@ export default class Mechanics {
         this.raycaster;
         this.enemiesIntersected = [];
         this.intersected;
-
+        //
         this.create();
     }
 
     create(){
         this.raycaster = new THREE.Raycaster();
+        this.startTime = new Date();
     }
 
     update(){
@@ -47,6 +50,11 @@ export default class Mechanics {
         }
     }
 
+    time(){
+        this.endTime = new Date();
+        this.elapsedTime = Math.round((this.endTime - this.startTime) / 1000);
+    }
+
     onVolumeChange(enemies){
         if (this.mic) {
             if (this.mic.volume > this.soundRange) {
@@ -55,7 +63,6 @@ export default class Mechanics {
                         if(bird.mesh){
                             if(bird.mesh.children[0].id == this.intersected) {
                                 bird.scared = true;
-                                //this.soundDetected = true;
                             }
                         }
                     });

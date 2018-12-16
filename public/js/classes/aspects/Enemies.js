@@ -24,9 +24,9 @@ class Enemies {
     //
   }
 
-  loop(scene, enemiesIntersected) {
-
-    if(this.birds.length < this.amount){
+  loop(scene, enemiesIntersected, time) {
+    
+    if(this.birds.length < this.amount + Math.floor(0.1 * time)){
       const seed = getRandomInt(0, this.seed);
 
       if(seed < 1){

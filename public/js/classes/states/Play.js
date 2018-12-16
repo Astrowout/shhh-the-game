@@ -23,6 +23,7 @@ export default class Play {
 
   create(){
     this.enemies = new Enemies(1, 1000, 50);
+    this.mechanics.time();
     //
     this.scene.create();
     this.lighting.create();
@@ -53,11 +54,12 @@ export default class Play {
     this.lighting.loop();
     this.environment.loop();
     this.mechanics.loop(this.enemies, this.scene);
+    this.mechanics.time();
 
     // EVENTS
 
     if(this.mechanics.VREnabled){
-      this.enemies.loop(this.scene.scene, this.mechanics.enemiesIntersected); // TODO: this.scene.scene doorgeven via this.render (promised based models)
+      this.enemies.loop(this.scene.scene, this.mechanics.enemiesIntersected, this.mechanics.elapsedTime); // TODO: this.scene.scene doorgeven via this.render (promised based models)
     }
 
     if(this.enemies){
@@ -65,7 +67,7 @@ export default class Play {
       this.enemies.birds.forEach(bird => {
         if(bird.scared){
           if(!bird.valued){
-            this.mechanics.score += 10;
+            this.mechanics.score += 50;
             console.log("DEBUG: Points gained. Current points: ", this.mechanics.score);
             bird.valued = true;
             bird.coin = new Coin({'x': bird.mesh.position.x, 'y': bird.mesh.position.y, 'z': bird.mesh.position.z}, 5);
@@ -86,6 +88,7 @@ export default class Play {
     }
 
     if(this.mechanics.gameOver){
+      console.log("DEBUG: Score: ", this.mechanics.score + (5 * this.mechanics.elapsedTime));
       this.reboot();
     }
   }
