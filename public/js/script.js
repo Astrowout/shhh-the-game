@@ -103,8 +103,6 @@ import Colors from "./classes/Colors.js";
 
       const container = document.querySelector(`#world`);
       container.appendChild(game.play.scene.renderer.domElement);
-
-      console.log('DEBUG: VR Button clicked');
       //
       game.play.mechanics.VREnabled = true;
       game.play.init();

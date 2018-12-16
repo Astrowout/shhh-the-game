@@ -27,13 +27,12 @@ class Heart {
   update(scene){
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
     this.mesh.scale.set(this.size, this.size, this.size);
-    this.mesh.rotation.x -= 1;
+    this.mesh.rotation.x -= 2;
     //
     this.render(scene)
   }
 
   render(scene){
-    console.log(scene, this.mesh);
     scene.add(this.mesh);
   }
 }
