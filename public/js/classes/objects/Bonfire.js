@@ -10,7 +10,7 @@ class Bonfire {
     const loader = new THREE.GLTFLoader();
     loader.load('../../../assets/models/bonfire.glb', model => this.handleLoadModel(model, scene));
     // 
-    this.light = new THREE.PointLight(Colors.brightOrange, 10, 200);
+    this.light = new THREE.PointLight(Colors.redLight, 10, 200);
   }
 
   handleLoadModel(model, scene){
@@ -18,7 +18,7 @@ class Bonfire {
     const mat = new THREE.MeshPhongMaterial({
       flatShading: true,
       wireframe: false,
-      color: '#FF7200'
+      color: Colors.orange
     });
     const geo = model.scene.children[0].children[1].geometry;
 

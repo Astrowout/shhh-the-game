@@ -1,3 +1,4 @@
+import Colors from "../Colors.js";
 
 class Camp {
   constructor(position, size) {
@@ -15,7 +16,7 @@ class Camp {
     const mat = new THREE.MeshPhongMaterial({
       flatShading: true,
       wireframe: false,
-      color: '#FF7200'
+      color: Colors.brownDark
     });
     const geo = model.scene.children[0].geometry;
 

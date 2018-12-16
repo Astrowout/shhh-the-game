@@ -7,7 +7,7 @@ export default class Interface {
         this.amount = amount;
 
         this.geometry = new THREE.PlaneGeometry(80, 80);
-        this.material = new THREE.MeshBasicMaterial({ color: Colors.red, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
+        this.material = new THREE.MeshBasicMaterial({ color: Colors.redDark, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
         this.flashOverlay = new THREE.Mesh(this.geometry, this.material);
     }
 
@@ -28,7 +28,7 @@ export default class Interface {
     update(scene, amount){
         scene.remove(this.lifes[amount].mesh);
         scene.add(this.flashOverlay);
-        window.setTimeout(() => scene.remove(this.flashOverlay), 200);
+        window.setTimeout(() => scene.remove(this.flashOverlay), 100);
         this.lifes.splice(amount, 1);
     }
 

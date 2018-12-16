@@ -5,6 +5,7 @@ import Mechanics from '../aspects/Mechanics.js';
 import Enemies from '../aspects/Enemies.js';
 import Interface from '../aspects/Interface.js';
 import Coin from '../objects/Coin.js';
+import Text from '../objects/Text.js';
 
 export default class Play {
   constructor(){
@@ -13,6 +14,8 @@ export default class Play {
     this.environment = new Environment(2000, 1500, this.scene.scene);
     this.mechanics = new Mechanics(5, 0, 0.1);
     this.interface = new Interface(this.mechanics.health);
+    //
+    this.shutdownActive = false;
   }
 
   init(){
@@ -58,7 +61,7 @@ export default class Play {
 
     // EVENTS
 
-    if(this.mechanics.VREnabled){
+    if(this.mechanics.VREnabled && !this.mechanics.gameOver){
       this.enemies.loop(this.scene.scene, this.mechanics.enemiesIntersected, this.mechanics.elapsedTime); // TODO: this.scene.scene doorgeven via this.render (promised based models)
     }
 
@@ -69,6 +72,7 @@ export default class Play {
           if(!bird.valued){
             this.mechanics.score += 50;
             console.log("DEBUG: Points gained. Current points: ", this.mechanics.score);
+            //
             bird.valued = true;
             bird.coin = new Coin({'x': bird.mesh.position.x, 'y': bird.mesh.position.y, 'z': bird.mesh.position.z}, 5);
             bird.coin.create(this.scene.scene);
@@ -79,6 +83,7 @@ export default class Play {
       if(this.enemies.collision){
         this.mechanics.health -= 1;
         console.log("DEBUG: Life lost. Current health: ", this.mechanics.health);
+        //
         this.enemies.collision = false;
         //
         if(this.mechanics.health >= 0){
@@ -87,19 +92,30 @@ export default class Play {
       }
     }
 
-    if(this.mechanics.gameOver){
-      console.log("DEBUG: Score: ", this.mechanics.score + (5 * this.mechanics.elapsedTime));
-      this.reboot();
+    if(this.mechanics.gameOver && !this.shutdownActive){
+      this.shutdown();
     }
+  }
+
+  shutdown(){
+    console.log("DEBUG: Score: ", this.mechanics.score + (5 * this.mechanics.elapsedTime));
+    this.shutdownActive = true;
+    //
+    this.enemies.killAll(this.scene.scene);
+    this.text = new Text(`GAME OVER\n Score: ${this.mechanics.score + (5 * this.mechanics.elapsedTime)}`, {'x': 30, 'y': 5, 'z': 0}, 2);
+    this.text.create(this.scene.scene);
+    //
+    window.setTimeout(() => {this.reboot()}, 7000);
   }
 
   reboot() {
     console.log("DEBUG: Rebooting game");
     //
+    this.text.kill(this.scene.scene);
     this.mechanics.score = 0;
     this.mechanics.health = 5;
     this.mechanics.gameOver = false;
-    this.enemies.killAll(this.scene.scene);
+    this.shutdownActive = false;
     this.interface.create(this.scene.camera);
   }
 }

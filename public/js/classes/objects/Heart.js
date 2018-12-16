@@ -1,3 +1,4 @@
+import Colors from "../Colors.js";
 
 class Heart {
   constructor(position, size) {
@@ -15,7 +16,7 @@ class Heart {
     const mat = new THREE.MeshPhongMaterial({
       flatShading: true,
       wireframe: false,
-      color: '#C03B36'
+      color: Colors.redDark
     });
     const geo = model.scene.children[0].children[0].children[0].children[0].children[0].geometry;
 

@@ -7,8 +7,10 @@ let Colors = {
   brownLight: "#CBB89C",
   blue: "#68C3C0",
   white: "#FFF6E0",
-  brightOrange: "#FF2E02",
-  red: "#FF0000",
+  redDark: "#CC4040",
+  redLight: "#FF2E02",
+  yellow: "#f5c256",
+  orange: "#ff4e00"
 };
 
 export default Colors;
