@@ -10,10 +10,6 @@
     background: linear-gradient(#2C5364, #203A43, #0F2027);
   }
 
-  .hidden {
-    display: none;
-  }
-
   #world {
     position: absolute;
     top: 0;
@@ -23,17 +19,14 @@
     z-index: -1;
   }
 
-  .title-container {
-    color: white;
+  .header {
+    background: url(../assets/img/header.jpg);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
-  .title {
-    font-family: 'Pacifico', cursive;
-    font-size: 10rem;
-    margin-bottom: 1rem;
-  }
-
-  .under-title {
-    font-family: monospace;
-    font-size: 2.5rem;
+  .hidden {
+    display: none;
   }

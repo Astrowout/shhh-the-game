@@ -97,9 +97,8 @@ import Colors from "./classes/Colors.js";
   }
 
   const handleClickVRButton = () => {
-      let intro = document.querySelector(`.title-container-js`);
+      let intro = document.querySelector(`.header-js`);
       intro.classList.toggle("hidden");
-      intro.classList.toggle("title-container");
 
       const container = document.querySelector(`#world`);
       container.appendChild(game.play.scene.renderer.domElement);
