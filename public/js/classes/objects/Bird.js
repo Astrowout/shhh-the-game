@@ -1,14 +1,16 @@
 
 class Bird {
-  constructor(position, scale, speed, entry, scene) {
+  constructor(position, scale, speed, entry, enemiesIntersected, scene) {
     this.position = position;
     this.scale = scale;
     this.entry = entry;
     this.speed = speed;
+    this.enemiesIntersected = enemiesIntersected;
     this.scene = scene;
     //
     this.collision = false;
     this.scared = false;
+    this.object;
     //
     this.create(scene);
   }
@@ -26,6 +28,9 @@ class Bird {
     });
     this.mesh = model.scene;
     this.mesh.children[0].children[2].material = mat;
+
+    //define object for enemiesIntersected
+    this.object = model.scene.children[0];
 
     // animation
     this.mixer = new THREE.AnimationMixer(this.mesh);
@@ -75,10 +80,12 @@ class Bird {
 
   render(scene){
     scene.add(this.mesh);
+    this.enemiesIntersected.push(this.object);
   }
 
   kill(scene){
     scene.remove(this.mesh);
+    this.enemiesIntersected.splice(this.object, 1);
   }
 }
 
