@@ -20,6 +20,7 @@ export default class Scene {
     }
 
     update(){
+        this.scene.add(this.camera);
         this.scene.background = new THREE.Color(Colors.purpleDark);
         this.renderer.setSize(this.width, this.height);
         this.renderer.shadowMap.enabled = true;

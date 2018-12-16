@@ -7,10 +7,13 @@ export default class Mechanics {
         //
         this.VREnabled = false;
         this.soundDetected = false;
+        //
+        this.raycaster;
+        this.enemiesIntersected
     }
 
     create(){
-        //
+        this.raycaster = new THREE.Raycaster();
     }
 
     update(){
