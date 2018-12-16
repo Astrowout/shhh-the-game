@@ -1,16 +1,13 @@
-import Colors from './Colors.js';
 
 class Camp {
-  constructor(position, size, scene) {
+  constructor(position, size) {
     this.position =  position;
     this.size = size;
-    //
-    this.create(scene);
   }
 
   create(scene){
     const loader = new THREE.GLTFLoader();
-    loader.load('../../assets/models/camp.glb', model => this.handleLoadModel(model, scene));
+    loader.load('../../../assets/models/camp.glb', model => this.handleLoadModel(model, scene));
   }
 
   handleLoadModel(model, scene){
@@ -24,13 +21,14 @@ class Camp {
 
     this.mesh = new THREE.Mesh(geo, mat);
     
-    this.update();
-    this.render(scene);
+    this.update(scene);
   }
 
-  update(){
+  update(scene){
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
     this.mesh.scale.set(this.size, this.size, this.size);
+    //
+    this.render(scene)
   }
 
   render(scene){

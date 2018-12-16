@@ -1,6 +1,6 @@
-import Bird from './Bird.js';
+import Bird from '../Bird.js';
 //
-import { getRandomInt } from "../libs/lib.js";
+import { getRandomInt } from "../../libs/lib.js";
 
 class Enemies {
   constructor(amount, dimension, seed) {
@@ -8,6 +8,21 @@ class Enemies {
     this.dimension = dimension;
     this.seed = seed;
     this.birds = [];
+  }
+
+  create(){
+    //
+  }
+
+  update(scared){
+
+    if(scared){
+      this.birds.forEach(bird => {bird.scared = true});
+    }
+  }
+
+  render(){
+    //
   }
 
   loop(scene) {

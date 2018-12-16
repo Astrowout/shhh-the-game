@@ -1,16 +1,14 @@
-import Colors from './Colors.js';
+import Colors from '../Colors.js';
 
 class Bonfire {
-  constructor(position, size, scene) {
+  constructor(position, size) {
     this.position = position;
     this.size = size;
-    //
-    this.create(scene);
   }
 
   create(scene){
     const loader = new THREE.GLTFLoader();
-    loader.load('../../assets/models/bonfire.glb', model => this.handleLoadModel(model, scene));
+    loader.load('../../../assets/models/bonfire.glb', model => this.handleLoadModel(model, scene));
     // 
     this.light = new THREE.PointLight(Colors.brightOrange, 10, 200);
   }
@@ -25,15 +23,16 @@ class Bonfire {
     const geo = model.scene.children[0].children[1].geometry;
 
     this.mesh = new THREE.Mesh(geo, mat);
-    
-    this.update();
-    this.render(scene);
+    //
+    this.update(scene);
   }
 
-  update(){
+  update(scene){
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
     this.mesh.scale.set(this.size, this.size - 2, this.size);
     this.light.position.set(this.position.x, this.position.y + 2, this.position.z);
+    //
+    this.render(scene);
   }
 
   render(scene){

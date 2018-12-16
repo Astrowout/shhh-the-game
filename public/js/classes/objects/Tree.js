@@ -1,4 +1,4 @@
-import Colors from './Colors.js';
+import Colors from '../Colors.js';
 
 class Tree {
   constructor(position, size, scene) {
@@ -10,11 +10,10 @@ class Tree {
 
   create(scene){
     const loader = new THREE.GLTFLoader();
-    loader.load('../../assets/models/tree.glb', model => this.handleLoadModel(model, scene));
+    loader.load('../../../assets/models/tree.glb', model => this.handleLoadModel(model, scene));
   }
 
   handleLoadModel(model, scene){
-
     const mat = new THREE.MeshPhongMaterial({
       flatShading: true,
       color: Colors.greenDark
@@ -24,14 +23,15 @@ class Tree {
     this.mesh = new THREE.Mesh(geo, mat);
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
-
-    this.update();
-    this.render(scene);
+    //
+    this.update(scene);
   }
 
-  update(){
+  update(scene){
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
     this.mesh.scale.set(this.size, this.size, this.size);
+    //
+    this.render(scene);
   }
 
   render(scene){

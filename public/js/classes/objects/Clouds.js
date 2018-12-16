@@ -42,6 +42,10 @@ class Clouds {
       this.mesh.rotation.z += this.speed / 10000;
     })
   }
+
+  render(scene){
+    scene.add(this.mesh);
+  }
 }
 
 export default Clouds;

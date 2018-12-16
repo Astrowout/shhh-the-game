@@ -1,12 +1,10 @@
-import Colors from './Colors.js';
+import Colors from '../Colors.js';
 
 class Floor {
   constructor(size, relief, position) {
     this.size = size;
     this.relief = relief;
     this.position = position;
-    //
-    this.create();
   }
 
   create(){
@@ -36,6 +34,10 @@ class Floor {
     }
     //
     this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+  }
+
+  render(scene){
+    scene.add(this.mesh);
   }
 }
 

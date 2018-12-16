@@ -1,147 +1,24 @@
-import Environment from './classes/Environment.js';
-import Enemies from './classes/Enemies.js';
-import Colors from './classes/Colors.js';
+import Game from './classes/Game.js';
 
 {
-
-  let scene,
-      WIDTH,
-      HEIGHT,
-      camera,
-      fieldOfView,
-      aspectRatio,
-      nearPlane,
-      farPlane,
-      renderer;
-
-  let environment,
-      enemies;
-
-  let hemisphereLight,
-  shadowLight;
-
-  let meter;
+  let game;
 
   const init = () => {
+    game = new Game();
     //
-    createScene();
-    createEnvironment();
-    createLights();
-    
+    initLoop();
+    initVR();
+    initMic();
     // window.addEventListener("deviceorientation", handleOrientation, true);
   }
 
-  // const handleOrientation = e => {
-  //   let playerRotation = e.alpha;
-  //   console.log(playerRotation);
-  // }
-
-  const createScene = () => {
-    WIDTH = window.innerWidth;
-    HEIGHT = window.innerHeight;
-
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(Colors.purpleDark);
-
-    aspectRatio = WIDTH / HEIGHT;
-    fieldOfView = 180;
-    nearPlane = 1;
-    farPlane= 2000;
-    camera = new THREE.PerspectiveCamera(
-      fieldOfView,
-      aspectRatio,
-      nearPlane,
-      farPlane
-    );
-
-    renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true
-    });
-    renderer.setSize(WIDTH, HEIGHT);
-    renderer.shadowMap.enabled = true;
-
-    //VR
-    const VRButton = document.body.appendChild(WEBVR.createButton(renderer));
-    renderer.vr.enabled = true;
-    VRButton.addEventListener('click', handleClickVRButton);
+  const initLoop = () => {
+    game.play.scene.renderer.setAnimationLoop(initLoop);
+    game.play.loop();
+    game.play.scene.renderer.render(game.play.scene.scene, game.play.scene.camera);
   }
 
-  const handleClickVRButton = () => {
-    let intro = document.querySelector(`.title-container-js`);
-    intro.classList.toggle("hidden");
-    intro.classList.toggle("title-container");
-
-    const container = document.querySelector(`#world`);
-    container.appendChild(renderer.domElement);
-
-    createEnemies();
-
-    getVolumeFromMic();
-    loop();
-
-    debug();
-  }
-
-  const createLights = () => {
-    hemisphereLight = new THREE.HemisphereLight(Colors.purpleLight, Colors.greenLight);
-    shadowLight = new THREE.DirectionalLight(0xffffff, .3);
-    
-    // Set the direction of the light
-    shadowLight.position.set(0, 1500, -1000);
-
-    // Allow shadow casting
-    shadowLight.castShadow = true;
-
-    // define the visible area of the projected shadow
-    shadowLight.shadow.camera.left = -500;
-    shadowLight.shadow.camera.right = 500;
-    shadowLight.shadow.camera.top = 500;
-    shadowLight.shadow.camera.bottom = -1000;
-    shadowLight.shadow.camera.near = 1;
-    shadowLight.shadow.camera.far = 2000;
-
-    // define the resolution of the shadow; the higher the better,
-    // but also the more expensive and less performant
-    shadowLight.shadow.mapSize.width = 2048;
-    shadowLight.shadow.mapSize.height = 2048;
-
-    // to activate the lights, just add them to the scene
-    // hemiLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 10);
-    // scene.add(hemiLightHelper);
-    scene.add(hemisphereLight);
-    scene.add(shadowLight);
-  }
-
-  const createEnvironment = () => {
-    environment = new Environment(2000, 1500, scene);
-  }
-
-  const createEnemies = () => {
-    enemies = new Enemies(20, 1000, 50);
-  }
-
-  const loop = () => {
-    renderer.setAnimationLoop(loop);
-    
-    environment.loop();
-
-    if(meter){
-      onVolumeChange();
-    }
-    
-    if(enemies){
-      enemies.loop(scene);
-    }
-
-    renderer.render(scene, camera);
-  }
-
-  const debug = () => {
-    camera.position.y = 1000;
-  }
-
-  const getVolumeFromMic = () => {
+  const initMic = () => {
     try {
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
@@ -176,23 +53,36 @@ import Colors from './classes/Colors.js';
 
     const mediaStreamSource = audioContext.createMediaStreamSource(stream);
 
-    meter = createAudioMeter(audioContext);
+    const meter = createAudioMeter(audioContext);
     mediaStreamSource.connect(meter);
+
+    game.play.mechanics.mic = meter;
   }
 
-  const onVolumeChange = () => {
+  const initVR = () => {
+    const VRButton = document.body.appendChild(WEBVR.createButton(game.play.scene.renderer));
+    game.play.scene.renderer.vr.enabled = true;
+    VRButton.addEventListener('click', handleClickVRButton);
+}
 
-    if (meter.volume > 0.2) {
-      //console.log("DEBUG: 'Shh' detected");
+  const handleClickVRButton = () => {
+      let intro = document.querySelector(`.title-container-js`);
+      intro.classList.toggle("hidden");
+      intro.classList.toggle("title-container");
 
-      if(enemies.birds){
-        enemies.birds.forEach((bird, index) => {
-          bird.scared = true;
-        });
-      }
-    }
+      const container = document.querySelector(`#world`);
+      container.appendChild(game.play.scene.renderer.domElement);
+
+      console.log('DEBUG: VR Button clicked');
+      //
+      game.play.mechanics.VREnabled = true;
+      game.play.init();
   }
 
+    // const handleOrientation = e => {
+    //   let playerRotation = e.alpha;
+    //   console.log(playerRotation);
+    // }
 
   init();
 }

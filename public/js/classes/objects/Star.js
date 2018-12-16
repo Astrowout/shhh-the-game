@@ -1,4 +1,4 @@
-import Colors from "./Colors.js";
+import Colors from "../Colors.js";
 
 class Star {
   constructor(radius, isAlluminated, position) {
@@ -32,6 +32,14 @@ class Star {
 
     if(this.isAlluminated){
       this.light.position.set(this.position.x, this.position.y, this.position.z);
+    }
+  }
+
+  render(scene){
+    scene.add(this.mesh);
+
+    if(this.isAlluminated){
+      scene.add(this.light);
     }
   }
 }
