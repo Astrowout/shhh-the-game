@@ -9,7 +9,7 @@ export default class Play {
     this.scene = new Scene(180, 1, 2000);
     this.lighting = new Lighting();
     this.environment = new Environment(2000, 1500, this.scene.scene);
-    this.mechanics = new Mechanics(0.2);
+    this.mechanics = new Mechanics(5, 0, 0.2);
   }
 
   init(){
@@ -19,7 +19,7 @@ export default class Play {
   }
 
   create(){
-    this.enemies = new Enemies(20, 1000, 50);
+    this.enemies = new Enemies(5, 1000, 50);
     //
     this.scene.create();
     this.lighting.create();
@@ -32,7 +32,7 @@ export default class Play {
     this.scene.update();
     this.lighting.update();
     this.environment.update();
-    this.mechanics.update();
+    //this.mechanics.update();
     this.enemies.update();
   }
 
@@ -50,12 +50,31 @@ export default class Play {
     this.environment.loop();
     this.mechanics.loop();
 
+
+    // EVENTS
+
     if(this.mechanics.VREnabled){
       this.enemies.loop(this.scene.scene, this.mechanics.soundDetected); // TODO: this.scene.scene doorgeven via this.render (promised based models)
     }
+
+    if(this.enemies){
+      if(this.enemies.collision){
+        this.mechanics.health -= 1;
+        console.log("DEBUG: Life lost. Current health: ", this.mechanics.health);
+        this.enemies.collision = false;
+      }
+    }
+
+    if(this.mechanics.gameOver){
+      this.reboot();
+    }
   }
 
-  shutdown() {
+  reboot() {
+    console.log("DEBUG: Rebooting game");
     //
+    this.mechanics.health = 5;
+    this.mechanics.gameOver = false;
+    this.enemies.killAll(this.scene.scene);
   }
 }
