@@ -17,9 +17,8 @@ export default class Mechanics {
         //
     }
 
-    update(health, score){
-        this.health = health;
-        this.score = score;
+    update(){
+        //
     }
 
     render(){

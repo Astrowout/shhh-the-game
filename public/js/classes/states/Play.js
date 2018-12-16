@@ -32,7 +32,7 @@ export default class Play {
     this.scene.update();
     this.lighting.update();
     this.environment.update();
-    //this.mechanics.update();
+    this.mechanics.update();
     this.enemies.update();
   }
 
@@ -58,6 +58,13 @@ export default class Play {
     }
 
     if(this.enemies){
+      
+      if(this.enemies.scared){
+        this.mechanics.score += 10;
+        console.log("DEBUG: Points gained. Current points: ", this.mechanics.score);
+        this.enemies.scared = false;
+      }
+
       if(this.enemies.collision){
         this.mechanics.health -= 1;
         console.log("DEBUG: Life lost. Current health: ", this.mechanics.health);

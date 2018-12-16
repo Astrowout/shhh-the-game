@@ -9,6 +9,7 @@ class Enemies {
     this.seed = seed;
     this.birds = [];
     //
+    this.scared = false;
     this.collision = false;
   }
 
@@ -52,7 +53,10 @@ class Enemies {
     // EVENTS
 
     if(soundDetected){
-      this.birds.forEach(bird => {bird.scared = true});
+      this.birds.forEach(bird => {
+        bird.scared = true;
+        this.scared = true;
+      });
     }
 
     this.birds.forEach((bird, index) => {
