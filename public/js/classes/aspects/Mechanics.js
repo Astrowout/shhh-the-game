@@ -1,19 +1,20 @@
 
 export default class Mechanics {
-    constructor(soundRange) {
+    constructor(health, score, soundRange) {
         this.mic;
+        this.score;
         //
+        this.health = health;
+        this.score = score;
         this.soundRange = soundRange;
         //
         this.VREnabled = false;
         this.soundDetected = false;
-        //
-        this.raycaster;
-        this.enemiesIntersected
+        this.gameOver = false;
     }
 
     create(){
-        this.raycaster = new THREE.Raycaster();
+        // this.raycaster = new THREE.Raycaster();
     }
 
     update(){
@@ -27,12 +28,18 @@ export default class Mechanics {
     loop(){
         if(this.mic){
             if(this.mic.volume > this.soundRange){
-                console.log("DEBUG: 'Shh' detected");
+                console.log("DEBUG: Sound detected");
                 //
                 this.soundDetected = true;
             }else{
                 this.soundDetected = false;
             }
+        }
+
+        if(this.health <= 0){
+            console.log("DEBUG: Game Over");
+            //
+            this.gameOver = true;
         }
     }
   }

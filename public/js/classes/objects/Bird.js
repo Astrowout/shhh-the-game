@@ -7,6 +7,7 @@ class Bird {
     this.speed = speed;
     this.scene = scene;
     //
+    this.collision = false;
     this.scared = false;
     //
     this.create(scene);
@@ -56,12 +57,18 @@ class Bird {
         this.mesh.position.z -= this.mesh.position.z * (this.speed * 0.02);
         this.mesh.position.y -= this.mesh.position.y * (this.speed * 0.01);
       }else{
-        console.log("DEBUG: Enemie scared");
+        console.log("DEBUG: Enemy scared");
         //
         this.mesh.rotation.y =  -this.entry + Math.PI / 2;
         this.mesh.position.x += this.mesh.position.x * (this.speed * 0.07);
         this.mesh.position.z += this.mesh.position.z * (this.speed * 0.07);
         this.mesh.position.y += this.mesh.position.y * (this.speed * 0.05);
+      }
+
+      if(Math.abs(this.mesh.position.x) < 10 && Math.abs(this.mesh.position.z) < 10){
+        console.log("DEBUG: Enemy collided with player");
+        //
+        this.collision = true;
       }
     }
   }

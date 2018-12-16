@@ -8,6 +8,9 @@ class Enemies {
     this.dimension = dimension;
     this.seed = seed;
     this.birds = [];
+    //
+    this.scared = false;
+    this.collision = false;
   }
 
   create(){
@@ -23,10 +26,6 @@ class Enemies {
   }
 
   loop(scene, soundDetected) {
-
-    if(soundDetected){
-      this.birds.forEach(bird => {bird.scared = true});
-    }
 
     if(this.birds.length < this.amount){
       const seed = getRandomInt(0, this.seed);
@@ -49,6 +48,23 @@ class Enemies {
         }
       }
     });
+
+
+    // EVENTS
+
+    if(soundDetected){
+      this.birds.forEach(bird => {
+        bird.scared = true;
+        this.scared = true;
+      });
+    }
+
+    this.birds.forEach((bird, index) => {
+      if(bird.collision){
+        this.collision = true;
+        this.kill(bird, index, scene);
+      }
+    })
   }
 
   kill(bird, index, scene){
@@ -56,6 +72,11 @@ class Enemies {
     //
     this.birds.splice(index, 1);
     bird.kill(scene);
+  }
+
+  killAll(scene){
+    this.birds.forEach(bird => {bird.kill(scene)});
+    this.birds = new Array(0);
   }
 }
 
