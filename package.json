@@ -1,15 +1,16 @@
 {
-  "name": "shhh-the-game",
-  "version": "1",
-  "main": "index.js",
-  "scripts": {
-    "production": "NODE_ENV=production node index.js",
-    "development": "PORT=8088 NODE_ENV=development node index.js",
-    "start": "node index.js",
-    "generate-ssl-certs": "./scripts/generate-ssl-certs.sh"
-  },
   "license": "MIT",
-  "dependencies": {
-    "express": "^4.16.3"
-  }
+  "name": "shhh-the-game",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "svelte-kit dev --https",
+    "build": "svelte-kit build"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^1.0.0-next.24",
+    "@sveltejs/kit": "next",
+    "svelte": "^3.44.0",
+    "three": "^0.136.0"
+  },
+  "type": "module"
 }
