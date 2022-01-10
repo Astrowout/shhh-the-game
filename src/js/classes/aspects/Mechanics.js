@@ -43,10 +43,11 @@ export default class Mechanics {
             this.intersected = undefined;
         }
 
-        if(this.health <= 0){
+        if (this.health <= 0){
             console.log("DEBUG: Game Over");
             //
             this.gameOver = true;
+            return;
         }
     }
 

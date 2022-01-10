@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 import Colors from "../Colors.js";
 
@@ -10,7 +12,7 @@ class Text {
   }
 
   create(scene){
-    const loader = new THREE.FontLoader();
+    const loader = new FontLoader();
     loader.load('../../../assets/fonts/bowlbyOne/bowlbyOne.json', font => this.handleLoadFont(font, scene));
   }
 
@@ -22,7 +24,7 @@ class Text {
       color: Colors.redDark
     });
 
-    const geo = new THREE.TextGeometry(this.message,{
+    const geo = new TextGeometry(this.message,{
       font: font,
       size: this.size,
       height: 1

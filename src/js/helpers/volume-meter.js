@@ -20,8 +20,7 @@ export default () => {
 				analyser.getByteFrequencyData(array);
 				const arraySum = array.reduce((a, value) => a + value, 0);
 				const average = arraySum / array.length;
-				console.log(Math.round(average));
-				return
+				return Math.round(average);
 			};
 		})
 		.catch(function(err) {

@@ -27,9 +27,7 @@ class Bird {
   handleLoadModel(model, scene){
 
     // model
-    const mat = new THREE.MeshNormalMaterial({
-      skinning: true
-    });
+    const mat = new THREE.MeshNormalMaterial();
     this.mesh = model.scene;
     this.mesh.children[0].children[2].material = mat;
 
