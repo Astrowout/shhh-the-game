@@ -58,7 +58,7 @@ export default class Mechanics {
 
     onVolumeChange(enemies){
         if (this.mic) {
-            if (this.mic.volume > this.soundRange) {
+            if (this.mic > this.soundRange) {
                 if(enemies.birds) {
                     enemies.birds.forEach(bird => {
                         if(bird.mesh){

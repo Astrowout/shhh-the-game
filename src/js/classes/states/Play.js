@@ -12,7 +12,7 @@ export default class Play {
     this.scene = new Scene(180, 1, 2000);
     this.lighting = new Lighting();
     this.environment = new Environment(2000, 1500, this.scene.scene);
-    this.mechanics = new Mechanics(5, 0, 0.1);
+    this.mechanics = new Mechanics(5, 0, 80);
     this.interface = new Interface(this.mechanics.health);
     //
     this.shutdownActive = false;

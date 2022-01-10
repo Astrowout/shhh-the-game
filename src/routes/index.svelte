@@ -57,9 +57,9 @@
 	}
 
 	const onMicrophoneGranted = (stream) => {
-		const meter = volumeMeter();
+		const meter = volumeMeter(stream);
 
-		game.play.mechanics.mic = meter;
+		game.play.mechanics.mic = meter();
 	}
 
 	const initVR = () => {
